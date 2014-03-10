@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 anders. All rights reserved.
 //
 
-#import "Force.h"
+#import "PhysicsForce.h"
 
-@implementation Force
+@implementation PhysicsForce
 
 -(id)initWithInitialVector:(PhysicsVector *)initialVector andIsVelocity:(BOOL)isVelocity andMaxSteps:(int)maxSteps andTag:(NSString *)tag
 {

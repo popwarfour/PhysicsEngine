@@ -10,7 +10,7 @@
 #define FlappyFish_PhysicsEngineHeader_h
 
 #import "PhysicsObject.h"
-#import "Force.h"
+#import "PhysicsForce.h"
 #import "PhysicsLandscape.h"
 #import "PhysicsVector.h"
 #import "PhysicsObjectPosition.h"

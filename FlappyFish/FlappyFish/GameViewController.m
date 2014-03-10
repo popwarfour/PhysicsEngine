@@ -26,6 +26,22 @@
 {
     [super viewDidLoad];
     
+    //Buttons & Labels
+    self.gameOverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, 320, 100)];
+    [self.gameOverLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.gameOverLabel  setFont:[self.gameOverLabel.font fontWithSize:40]];
+    [self.gameOverLabel  setText:@"Are You Ready?"];
+    
+    self.startNewGameButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.startNewGameButton setFrame:CGRectMake(40, 250, 320 - 80, 50)];
+    [self.startNewGameButton setTitle:@"Start" forState:UIControlStateNormal];
+    [self.startNewGameButton addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 320, 30)];
+    [self.scoreLabel setFont:[self.scoreLabel.font fontWithSize:30]];
+    [self.scoreLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.scoreLabel setText:@"0"];
+    
     CGRect curFrame = self.view.frame;
     self.gameView = [[PhysicsLandscape alloc] initWithFrame:curFrame andPhysicsObjects:[self createFishAndWalls] andUpdateInterval:1.0/60.0];
     [self.gameView setPhysicsLandscapeDelegate:self];
@@ -33,9 +49,16 @@
     
     [self.view bringSubviewToFront:self.upButton];
     
-    [self.gameView setShouldUpdate:TRUE];
+    [self.gameView setShouldUpdate:FALSE];
     
-    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
+    [self.view addSubview:self.gameOverLabel];
+    [self.view addSubview:self.startNewGameButton];
+    [self.view addSubview:self.scoreLabel];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self startGame];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +70,7 @@
 -(NSMutableArray *)createFishAndWalls
 {
     float gravityDown = 8/60.0;
-    Force *gravityForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
+    PhysicsForce *gravityForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
     
     NSMutableArray *objects = [[NSMutableArray alloc] init];
     
@@ -76,7 +99,7 @@
 {
     float gravityDown = 8/60.0;
     //float gravityDown = 10.0/60.0;
-    Force *gravityForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
+    PhysicsForce *gravityForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
     
     NSMutableArray *objects = [[NSMutableArray alloc] init];
     
@@ -112,7 +135,7 @@
 {
     self.fish.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
     
-    Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-4] andIsVelocity:TRUE andMaxSteps:1 andTag:@"up"];
+    PhysicsForce *upForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-4] andIsVelocity:TRUE andMaxSteps:1 andTag:@"up"];
     NSMutableArray *forces = self.fish.forces;
     [forces addObject:upForce];
 }
@@ -143,6 +166,60 @@
 }
 
 #pragma mark - Game Methods
+-(void)startGame
+{
+    //Remove Labels & Buttons
+    [self.gameOverLabel removeFromSuperview];
+    [self.startNewGameButton removeFromSuperview];
+    
+    self.currentScore = -1;
+    [self updateScoreLabel];
+    
+    //Remove Walls
+    for(PhysicsObject *object in self.gameView.physicObjects)
+    {
+        if(![object.objectTag isEqualToString:@"fish"] && ![object.objectTag isEqualToString:@"top"] && ![object.objectTag isEqualToString:@"bottom"])
+        {
+            [self.gameView removePhysicsObject:object];
+        }
+    }
+    
+    [self.gameView updatePhysicsObjectFromAddAndRemoveCache];
+    
+    //Reset Fish
+    int startX = 320/3;
+    int startY = 568/2;
+    [self.fish setFrame:CGRectMake(startX, startY, 10, 10)];
+    [self.fish setPhysicsPosition:[[PhysicsObjectPosition alloc] initWithX:self.fish.layer.position.x andY:self.fish.layer.position.y]];
+    [self.fish setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
+    for(PhysicsForce *force in self.fish.forces)
+    {
+        if(![force.tag isEqualToString:@"gravity"])
+        {
+            [self.fish.forces removeObject:force];
+        }
+    }
+    
+    //Start Game Engine
+    [self.gameView setShouldUpdate:TRUE];
+    
+    self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
+}
+
+-(void)gameOver
+{
+    [self.gameView setShouldUpdate:FALSE];
+    
+    [self.createNewWallTimer invalidate];
+    [self.updateScoreTimer invalidate];
+    
+    [self.gameOverLabel setText:@"Game Over!"];
+    [self.startNewGameButton setTitle:@"Start New Game" forState:UIControlStateNormal];
+    
+    [self.view addSubview:self.gameOverLabel];
+    [self.view addSubview:self.startNewGameButton];
+}
+
 
 -(void)checkBounceCollisionsWithObject1:(PhysicsObject *)object1 andObject2:(PhysicsObject *)object2
 {
@@ -164,21 +241,42 @@
        [object.objectTag isEqualToString:@"topWall"] ||
        [object.objectTag isEqualToString:@"bottomWall"])
     {
-        [self.gameView setShouldUpdate:FALSE];
-        
-        UILabel *gameOver = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, 320, 100)];
-        [gameOver setFont:[gameOver.font fontWithSize:40]];
-        [gameOver setText:@"GAME OVER!"];
-        [self.view addSubview:gameOver];
+        [self gameOver];
     }
+}
+
+-(void)updateScoreLabelSoon
+{
+    self.updateScoreTimer = [NSTimer scheduledTimerWithTimeInterval:3.25 target:self selector:@selector(updateScoreLabel) userInfo:nil repeats:FALSE];
+}
+
+-(void)updateScoreLabel
+{
+    [self.updateScoreTimer invalidate];
+    
+    NSLog(@"UPDATIN SCORE");
+    
+    self.currentScore++;
+    
+    if(self.currentScore >= 0)
+    {
+        NSString *score = [NSString stringWithFormat:@"%d", self.currentScore];
+        [self.scoreLabel setText:score];
+    }
+    else
+    {
+        [self.scoreLabel setText:@"0"];
+    }
+    
 }
 
 -(void)addNewMovingWalls
 {
     NSArray *walls = [self generateNewMovingWalls];
-    [self.gameView.physicObjects addObjectsFromArray:walls];
-    [self.gameView addSubview:[walls firstObject]];
-    [self.gameView addSubview:[walls lastObject]];
+    
+    [self.gameView addNewPhysicsObjects:walls];
+    
+    [self updateScoreLabelSoon];
 }
 
 -(NSArray *)generateNewMovingWalls
@@ -187,12 +285,12 @@
     int randTopHeight = (arc4random() % 200) + 50;
     int bottomHeight = self.view.frame.size.height - (randGapHeight + randTopHeight);
     
-    Force *leftForceTop = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceTop"];
-    Force *leftForceBottom = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceBottom"];
+    PhysicsForce *leftForceTop = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceTop"];
+    PhysicsForce *leftForceBottom = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceBottom"];
     
     PhysicsObject *topWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, 50, randTopHeight) initialForces:@[leftForceTop] andImage:nil];
     topWall.objectTag = @"topWall";
-    [topWall setBackgroundColor:[UIColor blackColor]];
+    [topWall setBackgroundColor:[UIColor grayColor]];
     
     PhysicsObject *bottomWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, randTopHeight + randGapHeight, 50, bottomHeight) initialForces:@[leftForceBottom] andImage:nil];
     bottomWall.objectTag = @"bottomWall";

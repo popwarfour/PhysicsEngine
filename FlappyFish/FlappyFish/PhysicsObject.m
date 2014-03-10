@@ -53,7 +53,7 @@
     float currentAccelerationWidth = 0;
     
     NSMutableArray *forcesToRemove = [[NSMutableArray alloc] init];
-    for(Force *force in self.forces)
+    for(PhysicsForce *force in self.forces)
     {
         if(force.isVelocity)
         {
@@ -96,7 +96,7 @@
     }
     
     self.velocity = [[PhysicsVector alloc] initWithWidth:currentVelocityWidth + currentAccelerationWidth andHeight:currentVelocityHeight + currentAccelerationHeight];
-    for(Force *removeForce in forcesToRemove)
+    for(PhysicsForce *removeForce in forcesToRemove)
     {
         [self.forces removeObject:removeForce];
     }
@@ -121,7 +121,7 @@
     
     if(newPosition.x < 0 || newPosition.y < 0 || newPosition.y > 568 || newPosition.x > 320)
     {
-        NSLog(@"STOP");
+        //NSLog(@"STOP");
     }
     
     CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];

@@ -19,6 +19,9 @@
         self.physicObjects = physicsObjects;
         self.updateInterval = updateInteral;
         
+        self.objectsToAdd = [[NSMutableArray alloc] init];
+        self.objectsToRemove = [[NSMutableArray alloc] init];
+        
         [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
@@ -43,6 +46,9 @@
         [self.physicObjects removeObject:removeMe];
         [removeMe removeFromSuperview];
     }
+    
+    [self.objectsToAdd removeAllObjects];
+    [self.objectsToRemove removeAllObjects];
 }
 #pragma mark Adding
 -(void)addInitialObjectsToView
@@ -62,7 +68,7 @@
 {
     for(PhysicsObject *object in objects)
     {
-        NSAssert([objects isKindOfClass:[PhysicsObject class]], @"Cannot add new object to landscape because it is not a valid physics object!");
+        NSAssert(![objects isKindOfClass:[PhysicsObject class]], @"Cannot add new object to landscape because it is not a valid physics object!");
         
         [self.objectsToAdd addObject:object];
     }

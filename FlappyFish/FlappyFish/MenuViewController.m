@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "PhysicsEngineHeader.h"
+#import "GameViewController.h"
 
 @interface MenuViewController ()
 
@@ -38,4 +39,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)StartGame:(id)sender
+{
+    GameViewController *gameVC = [[GameViewController alloc] initWithNibName:@"GameView" bundle:nil];
+    [self.navigationController pushViewController:gameVC animated:TRUE];
+}
 @end

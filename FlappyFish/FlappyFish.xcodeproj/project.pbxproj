@@ -22,13 +22,14 @@
 		DF1C5CEA18CCD03900943597 /* PhysicsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CE918CCD03900943597 /* PhysicsObject.m */; };
 		DF1C5CEF18CCDFC000943597 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CEE18CCDFC000943597 /* QuartzCore.framework */; };
 		DF1C5CF118CCE0A900943597 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CF018CCE0A900943597 /* CoreMotion.framework */; };
-		DF1C5CF518CCF29C00943597 /* Force.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CF418CCF29C00943597 /* Force.m */; };
+		DF1C5CF518CCF29C00943597 /* PhysicsForce.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CF418CCF29C00943597 /* PhysicsForce.m */; };
 		DF1C5CFB18CE25D400943597 /* PhysicsVector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFA18CE25D400943597 /* PhysicsVector.m */; };
 		DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */; };
 		DFC0DD0718CE4B6000EA1C71 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */; };
 		DFC0DD0A18CE4B9B00EA1C71 /* PhysicsLandscape.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0918CE4B9B00EA1C71 /* PhysicsLandscape.m */; };
 		DFC0DD0D18CE4D2700EA1C71 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */; };
-		DFC0DD0F18CE4E6200EA1C71 /* gameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFC0DD0E18CE4E6200EA1C71 /* gameView.xib */; };
+		DFC0DD0F18CE4E6200EA1C71 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFC0DD0E18CE4E6200EA1C71 /* GameView.xib */; };
+		DFC0DD1118CE6BE200EA1C71 /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFC0DD1018CE6BE200EA1C71 /* MenuView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +63,8 @@
 		DF1C5CE918CCD03900943597 /* PhysicsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsObject.m; sourceTree = "<group>"; };
 		DF1C5CEE18CCDFC000943597 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DF1C5CF018CCE0A900943597 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		DF1C5CF318CCF29C00943597 /* Force.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Force.h; sourceTree = "<group>"; };
-		DF1C5CF418CCF29C00943597 /* Force.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Force.m; sourceTree = "<group>"; };
+		DF1C5CF318CCF29C00943597 /* PhysicsForce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsForce.h; sourceTree = "<group>"; };
+		DF1C5CF418CCF29C00943597 /* PhysicsForce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsForce.m; sourceTree = "<group>"; };
 		DF1C5CF918CE25D400943597 /* PhysicsVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsVector.h; sourceTree = "<group>"; };
 		DF1C5CFA18CE25D400943597 /* PhysicsVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsVector.m; sourceTree = "<group>"; };
 		DF1C5CFD18CE26AF00943597 /* PhysicsEngineHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsEngineHeader.h; sourceTree = "<group>"; };
@@ -75,7 +76,8 @@
 		DFC0DD0918CE4B9B00EA1C71 /* PhysicsLandscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsLandscape.m; sourceTree = "<group>"; };
 		DFC0DD0B18CE4D2700EA1C71 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		DFC0DD0E18CE4E6200EA1C71 /* gameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = gameView.xib; sourceTree = "<group>"; };
+		DFC0DD0E18CE4E6200EA1C71 /* GameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
+		DFC0DD1018CE6BE200EA1C71 /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +187,8 @@
 				DF1C5CFD18CE26AF00943597 /* PhysicsEngineHeader.h */,
 				DF1C5CE818CCD03900943597 /* PhysicsObject.h */,
 				DF1C5CE918CCD03900943597 /* PhysicsObject.m */,
-				DF1C5CF318CCF29C00943597 /* Force.h */,
-				DF1C5CF418CCF29C00943597 /* Force.m */,
+				DF1C5CF318CCF29C00943597 /* PhysicsForce.h */,
+				DF1C5CF418CCF29C00943597 /* PhysicsForce.m */,
 				DF1C5CF918CE25D400943597 /* PhysicsVector.h */,
 				DF1C5CFA18CE25D400943597 /* PhysicsVector.m */,
 				DF1C5CFE18CE28C500943597 /* PhysicsObjectPosition.h */,
@@ -202,6 +204,7 @@
 			children = (
 				DFC0DD0518CE4B6000EA1C71 /* MenuViewController.h */,
 				DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */,
+				DFC0DD1018CE6BE200EA1C71 /* MenuView.xib */,
 			);
 			name = "Menu View Controller";
 			sourceTree = "<group>";
@@ -211,7 +214,7 @@
 			children = (
 				DFC0DD0B18CE4D2700EA1C71 /* GameViewController.h */,
 				DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */,
-				DFC0DD0E18CE4E6200EA1C71 /* gameView.xib */,
+				DFC0DD0E18CE4E6200EA1C71 /* GameView.xib */,
 			);
 			name = "Game View Controller";
 			sourceTree = "<group>";
@@ -292,8 +295,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF1C5CC118CCCB9F00943597 /* InfoPlist.strings in Resources */,
+				DFC0DD1118CE6BE200EA1C71 /* MenuView.xib in Resources */,
 				DF1C5CC918CCCB9F00943597 /* Images.xcassets in Resources */,
-				DFC0DD0F18CE4E6200EA1C71 /* gameView.xib in Resources */,
+				DFC0DD0F18CE4E6200EA1C71 /* GameView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +323,7 @@
 				DFC0DD0A18CE4B9B00EA1C71 /* PhysicsLandscape.m in Sources */,
 				DFC0DD0718CE4B6000EA1C71 /* MenuViewController.m in Sources */,
 				DF1C5CC718CCCB9F00943597 /* AppDelegate.m in Sources */,
-				DF1C5CF518CCF29C00943597 /* Force.m in Sources */,
+				DF1C5CF518CCF29C00943597 /* PhysicsForce.m in Sources */,
 				DF1C5CC318CCCB9F00943597 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

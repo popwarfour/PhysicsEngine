@@ -10,6 +10,7 @@
 
 @interface MenuViewController : UIViewController
 
+- (IBAction)StartGame:(id)sender;
 
 
 @end

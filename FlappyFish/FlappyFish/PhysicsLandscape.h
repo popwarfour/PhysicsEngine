@@ -43,5 +43,6 @@
 -(void)addNewPhysicsObjects:(NSArray *)objects;
 -(void)removePhysicsObject:(PhysicsObject *)object;
 -(void)removePhysicsObjects:(NSArray *)objects;
+-(void)updatePhysicsObjectFromAddAndRemoveCache;
 
 @end

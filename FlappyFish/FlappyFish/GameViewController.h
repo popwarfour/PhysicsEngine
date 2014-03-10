@@ -16,6 +16,15 @@
 @property (nonatomic, strong) PhysicsObject *fish;
 @property (weak, nonatomic) IBOutlet UIButton *upButton;
 
+@property (nonatomic, strong) UILabel *gameOverLabel;
+@property (nonatomic, strong) UIButton *startNewGameButton;
+@property (nonatomic, strong) UILabel *scoreLabel;
+
+@property (nonatomic, strong) NSTimer *createNewWallTimer;
+@property (nonatomic, strong) NSTimer *updateScoreTimer;
+
+@property int currentScore;
+
 - (IBAction)upButtonPressed:(id)sender;
 
 @end

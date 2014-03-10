@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreMotion/CoreMotion.h>
-#import "Force.h"
+#import "PhysicsForce.h"
 #import "PhysicsVector.h"
 #import "PhysicsObjectPosition.h"
 

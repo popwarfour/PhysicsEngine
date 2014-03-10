@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PhysicsVector.h"
 
-@interface Force : NSObject
+@interface PhysicsForce : NSObject
 
 @property PhysicsVector *velocity;
 @property PhysicsVector *acceleration;
