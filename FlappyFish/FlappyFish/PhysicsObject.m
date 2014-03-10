@@ -10,7 +10,7 @@
 
 @implementation PhysicsObject
 
-- (id)initWithFrame:(CGRect)frame initialForces:(NSMutableArray *)initialForces andImage:(NSString *)image
+- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(NSString *)image
 {
     self = [super initWithFrame:frame];
     if (self)
@@ -26,7 +26,18 @@
         }
         [self addSubview:self.image];
         
-        self.forces = [[NSMutableArray alloc] initWithArray:initialForces];
+        if([initialForces isKindOfClass:[NSMutableArray class]])
+        {
+            self.forces = initialForces;
+        }
+        else if([initialForces isKindOfClass:[NSArray class]])
+        {
+            self.forces = [[NSMutableArray alloc] initWithArray:initialForces];
+        }
+        else
+        {
+            NSAssert(FALSE, @"Invalid type of object as initial forces. Must be of type NSArray or NSMutableArray");
+        }
         
         self.physicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.layer.position.x andY:self.layer.position.y];
     }

@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PhysicsEngineHeader.h"
+#import "GameViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, PhysicsLandscapeDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) NSMutableSet *collidingSets;
 
 @end

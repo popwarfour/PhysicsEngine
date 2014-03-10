@@ -19,28 +19,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FlappyFish/AppDelegate.m"
-            timestampString = "416170403.836873"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "-collisionDidOccurWithPhysicsLandscape:andObjects:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416168096.722788"
+            timestampString = "416172699.772708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "-updateVelocity"
             landmarkType = "5">
             <Locations>
@@ -82,11 +66,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416168214.951218"
+            timestampString = "416172699.772708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "-updateVelocity"
             landmarkType = "5">
          </BreakpointContent>
@@ -98,11 +82,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416171057.609789"
+            timestampString = "416172699.772708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "-updatePositionWithInterval:"
             landmarkType = "5">
          </BreakpointContent>
@@ -120,6 +104,22 @@
             startingLineNumber = "83"
             endingLineNumber = "83"
             landmarkName = "-loop"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlappyFish/GameViewController.m"
+            timestampString = "416174254.000156"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "-upButton:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

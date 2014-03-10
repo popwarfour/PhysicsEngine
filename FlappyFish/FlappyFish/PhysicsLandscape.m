@@ -1,60 +1,41 @@
 //
-//  GravityViewController.m
+//  Test.m
 //  FlappyFish
 //
-//  Created by Jordan Rouille on 3/9/14.
+//  Created by Jordan Rouille on 3/10/14.
 //  Copyright (c) 2014 anders. All rights reserved.
 //
 
-#import "PhysicsLandscapeViewController.h"
+#import "PhysicsLandscape.h"
+#import <UIKit/UIKit.h>
 
-@interface PhysicsLandscapeViewController ()
+@implementation PhysicsLandscape
 
-@end
-
-@implementation PhysicsLandscapeViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andPhysicsObjects:(NSMutableArray *)physicsObjects andUpdateInterval:(float)updateInteral
+- (id)initWithFrame:(CGRect)frame andPhysicsObjects:(NSMutableArray *)physicsObjects andUpdateInterval:(float)updateInteral
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    self = [super initWithFrame:frame];
+    if (self)
+    {
         self.physicObjects = physicsObjects;
         self.updateInterval = updateInteral;
+        
+        [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
 }
+
+-(void)drawRect:(CGRect)rect
+{
+    [self addObjectsToView];
+}
+
 
 -(void)addObjectsToView
 {
     for(PhysicsObject *object in self.physicObjects)
     {
-        [self.view addSubview:object];
+        [self addSubview:object];
     }
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-    [self addObjectsToView];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)upButtonPressed:(id)sender
-{
-    PhysicsObject *obj = [self.physicObjects firstObject];
-    obj.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
-    
-    Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-4] andIsVelocity:TRUE andMaxSteps:1 andTag:@"up"];
-    NSMutableArray *forces = obj.forces;
-    [forces addObject:upForce];
 }
 
 -(void)setShouldUpdate:(BOOL)shouldUpdate
@@ -147,4 +128,5 @@
         }
     }
 }
+
 @end

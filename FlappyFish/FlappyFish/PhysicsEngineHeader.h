@@ -11,7 +11,7 @@
 
 #import "PhysicsObject.h"
 #import "Force.h"
-#import "PhysicsLandscapeViewController.h"
+#import "PhysicsLandscape.h"
 #import "PhysicsVector.h"
 #import "PhysicsObjectPosition.h"
 

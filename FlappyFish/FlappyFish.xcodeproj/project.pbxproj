@@ -19,14 +19,16 @@
 		DF1C5CD218CCCB9F00943597 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CBA18CCCB9F00943597 /* UIKit.framework */; };
 		DF1C5CDA18CCCB9F00943597 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF1C5CD818CCCB9F00943597 /* InfoPlist.strings */; };
 		DF1C5CDC18CCCB9F00943597 /* FlappyFishTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CDB18CCCB9F00943597 /* FlappyFishTests.m */; };
-		DF1C5CE718CCCF9000943597 /* PhysicsLandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CE618CCCF9000943597 /* PhysicsLandscapeViewController.m */; };
 		DF1C5CEA18CCD03900943597 /* PhysicsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CE918CCD03900943597 /* PhysicsObject.m */; };
-		DF1C5CEC18CCD44200943597 /* GravityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF1C5CEB18CCD44200943597 /* GravityView.xib */; };
 		DF1C5CEF18CCDFC000943597 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CEE18CCDFC000943597 /* QuartzCore.framework */; };
 		DF1C5CF118CCE0A900943597 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CF018CCE0A900943597 /* CoreMotion.framework */; };
 		DF1C5CF518CCF29C00943597 /* Force.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CF418CCF29C00943597 /* Force.m */; };
 		DF1C5CFB18CE25D400943597 /* PhysicsVector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFA18CE25D400943597 /* PhysicsVector.m */; };
 		DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */; };
+		DFC0DD0718CE4B6000EA1C71 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */; };
+		DFC0DD0A18CE4B9B00EA1C71 /* PhysicsLandscape.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0918CE4B9B00EA1C71 /* PhysicsLandscape.m */; };
+		DFC0DD0D18CE4D2700EA1C71 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */; };
+		DFC0DD0F18CE4E6200EA1C71 /* gameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFC0DD0E18CE4E6200EA1C71 /* gameView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,11 +58,8 @@
 		DF1C5CD718CCCB9F00943597 /* FlappyFishTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FlappyFishTests-Info.plist"; sourceTree = "<group>"; };
 		DF1C5CD918CCCB9F00943597 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DF1C5CDB18CCCB9F00943597 /* FlappyFishTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlappyFishTests.m; sourceTree = "<group>"; };
-		DF1C5CE518CCCF9000943597 /* PhysicsLandscapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsLandscapeViewController.h; sourceTree = "<group>"; };
-		DF1C5CE618CCCF9000943597 /* PhysicsLandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsLandscapeViewController.m; sourceTree = "<group>"; };
 		DF1C5CE818CCD03900943597 /* PhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsObject.h; sourceTree = "<group>"; };
 		DF1C5CE918CCD03900943597 /* PhysicsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsObject.m; sourceTree = "<group>"; };
-		DF1C5CEB18CCD44200943597 /* GravityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GravityView.xib; sourceTree = "<group>"; };
 		DF1C5CEE18CCDFC000943597 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DF1C5CF018CCE0A900943597 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		DF1C5CF318CCF29C00943597 /* Force.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Force.h; sourceTree = "<group>"; };
@@ -70,6 +69,13 @@
 		DF1C5CFD18CE26AF00943597 /* PhysicsEngineHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsEngineHeader.h; sourceTree = "<group>"; };
 		DF1C5CFE18CE28C500943597 /* PhysicsObjectPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsObjectPosition.h; sourceTree = "<group>"; };
 		DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsObjectPosition.m; sourceTree = "<group>"; };
+		DFC0DD0518CE4B6000EA1C71 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		DFC0DD0818CE4B9B00EA1C71 /* PhysicsLandscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsLandscape.h; sourceTree = "<group>"; };
+		DFC0DD0918CE4B9B00EA1C71 /* PhysicsLandscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsLandscape.m; sourceTree = "<group>"; };
+		DFC0DD0B18CE4D2700EA1C71 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		DFC0DD0E18CE4E6200EA1C71 /* gameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = gameView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,12 +139,13 @@
 		DF1C5CBC18CCCB9F00943597 /* FlappyFish */ = {
 			isa = PBXGroup;
 			children = (
+				DFC0DD0318CE4B3C00EA1C71 /* Menu View Controller */,
+				DFC0DD0418CE4B4B00EA1C71 /* Game View Controller */,
 				DF1C5CF218CCEBA900943597 /* PhysicsEngine */,
 				DF1C5CC518CCCB9F00943597 /* AppDelegate.h */,
 				DF1C5CC618CCCB9F00943597 /* AppDelegate.m */,
 				DF1C5CC818CCCB9F00943597 /* Images.xcassets */,
 				DF1C5CBD18CCCB9F00943597 /* Supporting Files */,
-				DF1C5CEB18CCD44200943597 /* GravityView.xib */,
 			);
 			path = FlappyFish;
 			sourceTree = "<group>";
@@ -180,14 +187,33 @@
 				DF1C5CE918CCD03900943597 /* PhysicsObject.m */,
 				DF1C5CF318CCF29C00943597 /* Force.h */,
 				DF1C5CF418CCF29C00943597 /* Force.m */,
-				DF1C5CE518CCCF9000943597 /* PhysicsLandscapeViewController.h */,
-				DF1C5CE618CCCF9000943597 /* PhysicsLandscapeViewController.m */,
 				DF1C5CF918CE25D400943597 /* PhysicsVector.h */,
 				DF1C5CFA18CE25D400943597 /* PhysicsVector.m */,
 				DF1C5CFE18CE28C500943597 /* PhysicsObjectPosition.h */,
 				DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */,
+				DFC0DD0818CE4B9B00EA1C71 /* PhysicsLandscape.h */,
+				DFC0DD0918CE4B9B00EA1C71 /* PhysicsLandscape.m */,
 			);
 			name = PhysicsEngine;
+			sourceTree = "<group>";
+		};
+		DFC0DD0318CE4B3C00EA1C71 /* Menu View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DFC0DD0518CE4B6000EA1C71 /* MenuViewController.h */,
+				DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */,
+			);
+			name = "Menu View Controller";
+			sourceTree = "<group>";
+		};
+		DFC0DD0418CE4B4B00EA1C71 /* Game View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DFC0DD0B18CE4D2700EA1C71 /* GameViewController.h */,
+				DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */,
+				DFC0DD0E18CE4E6200EA1C71 /* gameView.xib */,
+			);
+			name = "Game View Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,7 +293,7 @@
 			files = (
 				DF1C5CC118CCCB9F00943597 /* InfoPlist.strings in Resources */,
 				DF1C5CC918CCCB9F00943597 /* Images.xcassets in Resources */,
-				DF1C5CEC18CCD44200943597 /* GravityView.xib in Resources */,
+				DFC0DD0F18CE4E6200EA1C71 /* gameView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,13 +312,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFC0DD0D18CE4D2700EA1C71 /* GameViewController.m in Sources */,
 				DF1C5CFB18CE25D400943597 /* PhysicsVector.m in Sources */,
 				DF1C5CEA18CCD03900943597 /* PhysicsObject.m in Sources */,
 				DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */,
+				DFC0DD0A18CE4B9B00EA1C71 /* PhysicsLandscape.m in Sources */,
+				DFC0DD0718CE4B6000EA1C71 /* MenuViewController.m in Sources */,
 				DF1C5CC718CCCB9F00943597 /* AppDelegate.m in Sources */,
 				DF1C5CF518CCF29C00943597 /* Force.m in Sources */,
 				DF1C5CC318CCCB9F00943597 /* main.m in Sources */,
-				DF1C5CE718CCCF9000943597 /* PhysicsLandscapeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
