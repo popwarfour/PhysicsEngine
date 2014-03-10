@@ -127,25 +127,8 @@
     PhysicsObject *object1 = [firstCollisionsSet firstObject];
     PhysicsObject *object2 = [firstCollisionsSet lastObject];
     
-    //Add Bounce!
-    if([object1.objectTag isEqualToString:@"fish"])
-    {
-        PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:object1.velocity.height * -0.9];
-        Force *upForce = [[Force alloc] initWithInitialVector:newVelocity andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
-        NSMutableArray *forces = object1.forces;
-        [forces addObject:upForce];
-        
-        [object1 setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
-    }
-    if([object2.objectTag isEqualToString:@"fish"])
-    {
-        PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:object2.velocity.height * -0.9];
-        Force *upForce = [[Force alloc] initWithInitialVector:newVelocity andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
-        NSMutableArray *forces = object2.forces;
-        [forces addObject:upForce];
-        
-        [object2 setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
-    }
+    [self checkForGameOverCollision:object1];
+    [self checkForGameOverCollision:object2];
 }
 
 -(void)landscapeDidUpdateObject:(PhysicsObject *)object forLandscape:(PhysicsLandscape *)_landscape
@@ -160,6 +143,35 @@
 }
 
 #pragma mark - Game Methods
+
+-(void)checkBounceCollisionsWithObject1:(PhysicsObject *)object1 andObject2:(PhysicsObject *)object2
+{
+    /*
+     PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:object1.velocity.height * -0.9];
+     Force *upForce = [[Force alloc] initWithInitialVector:newVelocity andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
+     NSMutableArray *forces = object1.forces;
+     [forces addObject:upForce];
+     
+     [object1 setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];*/
+}
+
+-(void)checkForGameOverCollision:(PhysicsObject *)object
+{
+    //Add Bounce!
+    if([object.objectTag isEqualToString:@"fish"] ||
+       [object.objectTag isEqualToString:@"top"] ||
+       [object.objectTag isEqualToString:@"bottom"] ||
+       [object.objectTag isEqualToString:@"topWall"] ||
+       [object.objectTag isEqualToString:@"bottomWall"])
+    {
+        [self.gameView setShouldUpdate:FALSE];
+        
+        UILabel *gameOver = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, 320, 100)];
+        [gameOver setFont:[gameOver.font fontWithSize:40]];
+        [gameOver setText:@"GAME OVER!"];
+        [self.view addSubview:gameOver];
+    }
+}
 
 -(void)addNewMovingWalls
 {
