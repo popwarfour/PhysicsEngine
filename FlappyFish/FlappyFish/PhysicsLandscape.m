@@ -26,11 +26,26 @@
 
 -(void)drawRect:(CGRect)rect
 {
-    [self addObjectsToView];
+    [self addInitialObjectsToView];
 }
 
-
--(void)addObjectsToView
+#pragma mark - Added & Removing Physics Objects
+#pragma mark Clearing Cache
+-(void)updatePhysicsObjectFromAddAndRemoveCache
+{
+    for(PhysicsObject *addMe in self.objectsToAdd)
+    {
+        [self.physicObjects addObject:addMe];
+        [self addSubview:addMe];
+    }
+    for(PhysicsObject *removeMe in self.objectsToRemove)
+    {
+        [self.physicObjects removeObject:removeMe];
+        [removeMe removeFromSuperview];
+    }
+}
+#pragma mark Adding
+-(void)addInitialObjectsToView
 {
     for(PhysicsObject *object in self.physicObjects)
     {
@@ -38,6 +53,35 @@
     }
 }
 
+-(void)addNewPhysicsObject:(PhysicsObject *)object
+{
+    [self.objectsToAdd addObject:object];
+}
+
+-(void)addNewPhysicsObjects:(NSArray *)objects
+{
+    for(PhysicsObject *object in objects)
+    {
+        NSAssert([objects isKindOfClass:[PhysicsObject class]], @"Cannot add new object to landscape because it is not a valid physics object!");
+        
+        [self.objectsToAdd addObject:object];
+    }
+}
+
+#pragma mark Removing
+-(void)removePhysicsObject:(PhysicsObject *)object
+{
+    [self.objectsToRemove addObject:object];
+}
+-(void)removePhysicsObjects:(NSArray *)objects
+{
+    for(PhysicsObject *object in objects)
+    {
+        [self.objectsToAdd addObject:object];
+    }
+}
+
+#pragma mark - Updating Engine
 -(void)setShouldUpdate:(BOOL)shouldUpdate
 {
     self.isUpdating = shouldUpdate;
@@ -65,6 +109,9 @@
 	{
 		[self.physicsLandscapeDelegate landscapeWillUpdateForPhysicsLandscape:self];
 	}
+    
+    [self updatePhysicsObjectFromAddAndRemoveCache];
+    
     for(PhysicsObject *object in self.physicObjects)
     {
         if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeWillUpdateObject:forLandscape:)])
@@ -88,6 +135,7 @@
     }
 }
 
+#pragma mark - Collisions
 -(BOOL)checkCollisiosnForObject1:(PhysicsObject *)object1 andObject2:(PhysicsObject *)object2
 {
     if(![object1 isEqual:object2])

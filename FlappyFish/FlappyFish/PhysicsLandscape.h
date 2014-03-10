@@ -20,7 +20,7 @@
 -(void) landscapeWillUpdateForPhysicsLandscape:(PhysicsLandscape *)_landscape;
 -(void) landscapeDidUpdateForPhysicsLandscape:(PhysicsLandscape *)_landscape;
 -(void) landscapeWillUpdateObject:(PhysicsObject *)objet forLandscape:(PhysicsLandscape *)_landscape;
--(void) landscapeDidUpdateObject:(PhysicsObject *)objet forLandscape:(PhysicsLandscape *)_landscape;
+-(void) landscapeDidUpdateObject:(PhysicsObject *)object forLandscape:(PhysicsLandscape *)_landscape;
 
 @end
 
@@ -32,8 +32,16 @@
 @property (nonatomic, strong) NSTimer *loopTimer;
 @property (nonatomic, strong) NSMutableArray *physicObjects;
 
+@property (nonatomic, strong) NSMutableArray *objectsToRemove;
+@property (nonatomic, strong) NSMutableArray *objectsToAdd;
+
+
 - (IBAction)upButtonPressed:(id)sender;
 -(void)setShouldUpdate:(BOOL)shouldUpdate;
 - (id)initWithFrame:(CGRect)frame andPhysicsObjects:(NSMutableArray *)physicsObjects andUpdateInterval:(float)updateInteral;
+-(void)addNewPhysicsObject:(PhysicsObject *)object;
+-(void)addNewPhysicsObjects:(NSArray *)objects;
+-(void)removePhysicsObject:(PhysicsObject *)object;
+-(void)removePhysicsObjects:(NSArray *)objects;
 
 @end

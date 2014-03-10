@@ -31,7 +31,11 @@
     [self.gameView setPhysicsLandscapeDelegate:self];
     [self.view addSubview:self.gameView];
     
+    [self.view bringSubviewToFront:self.upButton];
+    
     [self.gameView setShouldUpdate:TRUE];
+    
+    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,6 +146,47 @@
         
         [object2 setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
     }
+}
+
+-(void)landscapeDidUpdateObject:(PhysicsObject *)object forLandscape:(PhysicsLandscape *)_landscape
+{
+    if([object.objectTag isEqualToString:@"bottomWall"] || [object.objectTag isEqualToString:@"topWall"])
+    {
+        if((object.frame.origin.x + object.frame.size.width) <= 0)
+        {
+            [self.gameView removePhysicsObject:object];
+        }
+    }
+}
+
+#pragma mark - Game Methods
+
+-(void)addNewMovingWalls
+{
+    NSArray *walls = [self generateNewMovingWalls];
+    [self.gameView.physicObjects addObjectsFromArray:walls];
+    [self.gameView addSubview:[walls firstObject]];
+    [self.gameView addSubview:[walls lastObject]];
+}
+
+-(NSArray *)generateNewMovingWalls
+{
+    int randGapHeight = (arc4random() % 50) + 80;
+    int randTopHeight = (arc4random() % 200) + 50;
+    int bottomHeight = self.view.frame.size.height - (randGapHeight + randTopHeight);
+    
+    Force *leftForceTop = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceTop"];
+    Force *leftForceBottom = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceBottom"];
+    
+    PhysicsObject *topWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, 50, randTopHeight) initialForces:@[leftForceTop] andImage:nil];
+    topWall.objectTag = @"topWall";
+    [topWall setBackgroundColor:[UIColor blackColor]];
+    
+    PhysicsObject *bottomWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, randTopHeight + randGapHeight, 50, bottomHeight) initialForces:@[leftForceBottom] andImage:nil];
+    bottomWall.objectTag = @"bottomWall";
+    [topWall setBackgroundColor:[UIColor grayColor]];
+    
+    return @[topWall, bottomWall];
 }
 
 @end
