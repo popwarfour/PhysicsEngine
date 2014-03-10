@@ -90,11 +90,12 @@
         [self.forces removeObject:removeForce];
     }
 
+    /*
     PhysicsVector *currentVelocity = self.velocity;
     float height = currentVelocity.height;
     float width = currentVelocity.width;
     
-    self.velocity = [[PhysicsVector alloc] initWithWidth:width andHeight:height];
+    self.velocity = [[PhysicsVector alloc] initWithWidth:width andHeight:height];*/
 }
 
 -(void)updatePositionWithInterval:(float)interval
@@ -107,8 +108,14 @@
     PhysicsObjectPosition *currentPosition = self.physicsPosition;
     PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + self.velocity.width andY:currentPosition.y + self.velocity.height];
     
-    CGPoint roundedCurrentPosition = CGPointMake(abs(currentPosition.x), abs(currentPosition.y));
-    CGPoint roundedNewPosition = CGPointMake(abs(newPosition.x), abs(newPosition.y));
+    if(newPosition.x < 0 || newPosition.y < 0 || newPosition.y > 568 || newPosition.x > 320)
+    {
+        NSLog(@"STOP");
+    }
+    
+    CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];
+    CGPoint roundedNewPosition = [newPosition roundValueToCGPoint];
+    
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
     [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];

@@ -101,75 +101,25 @@
     PhysicsObject *object1 = [firstCollisionsSet firstObject];
     PhysicsObject *object2 = [firstCollisionsSet lastObject];
     
-    /*
-    NSMutableSet *objectsToRemove = [[NSMutableSet alloc] init];
-    for(PhysicsObject *temp in self.collidingSets.allObjects)
-    {
-        BOOL found = FALSE;
-        if([object1 isEqual:temp])
-        {
-            //found = TRUE;
-        }
-        
-        if(!found)
-            [objectsToRemove addObject:object1];
-        
-        found = FALSE;
-        
-        if([object2 isEqual:temp])
-        {
-            //found = TRUE;
-        }
-        
-        if(!found)
-            [objectsToRemove addObject:object2];
-    }
-    
-    for(PhysicsObject *removeMe in objectsToRemove)
-    {
-        [self.collidingSets removeObject:removeMe];
-    }*/
-    
+    //Add Bounce!
     if([object1.objectTag isEqualToString:@"snowflaik"])
     {
-        if(![self.collidingSets containsObject:object1])
-        {
-            object1.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
-            
-            //NSLog(@"NUM FORCES: %d", object1.forces.count);
-            
-            Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-8] andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
-            NSMutableArray *forces = object1.forces;
-            [forces addObject:upForce];
-            
-            //[self.collidingSets addObject:object1];
-        }
-        else
-        {
-            //NSLog(@"ALREADY HERE");
-        }
-        
+        PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:object1.velocity.height * -0.9];
+        Force *upForce = [[Force alloc] initWithInitialVector:newVelocity andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
+        NSMutableArray *forces = object1.forces;
+        [forces addObject:upForce];
+    
+        [object1 setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
     }
     if([object2.objectTag isEqualToString:@"snowflaik"])
     {
-        if(![self.collidingSets containsObject:object2])
-        {
-            object2.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
-            //NSLog(@"NUM FORCES: %d", object2.forces.count);
-            
-            Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-8] andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
-            NSMutableArray *forces = object2.forces;
-            [forces addObject:upForce];
-            
-            //[self.collidingSets addObject:object2];
-        }
-        else
-        {
-            //NSLog(@"ALREADY HERE");
-        }
+        PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:object2.velocity.height * -0.9];
+        Force *upForce = [[Force alloc] initWithInitialVector:newVelocity andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
+        NSMutableArray *forces = object2.forces;
+        [forces addObject:upForce];
         
+        [object2 setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
     }
-    //NSLog(@"COLLISONS OBJECTS: %d", _objects.count);
 }
 
 @end

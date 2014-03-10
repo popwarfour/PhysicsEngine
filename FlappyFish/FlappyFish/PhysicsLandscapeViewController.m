@@ -52,7 +52,7 @@
     PhysicsObject *obj = [self.physicObjects firstObject];
     obj.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
     
-    Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-35] andIsVelocity:FALSE andMaxSteps:1 andTag:@"up"];
+    Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-4] andIsVelocity:TRUE andMaxSteps:1 andTag:@"up"];
     NSMutableArray *forces = obj.forces;
     [forces addObject:upForce];
 }

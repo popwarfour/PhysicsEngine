@@ -15,4 +15,7 @@
 
 -(id)initWithX:(float)x andY:(float)y;
 
+-(CGPoint)roundValueToCGPoint;
+
+
 @end

@@ -19,5 +19,11 @@
     }
     return self;
 }
-
+-(CGPoint)roundValueToCGPoint
+{
+    //X
+    int roundedX = roundf(self.x);
+    int roundedY = roundf(self.y);
+    return CGPointMake(roundedX, roundedY);
+}
 @end
