@@ -14,13 +14,57 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    GravityViewController *vc = [[GravityViewController alloc] initWithNibName:@"GravityView" bundle:nil];
+    NSMutableArray *objects = [self createSnowWithFlaiks:1];
+    PhysicsLandscapeViewController *vc = [[PhysicsLandscapeViewController alloc] initWithNibName:@"GravityView" bundle:nil andPhysicsObjects:objects andUpdateInterval:1.0/60.0];
+    [vc setPhysicsLandscapeDelegate:self];
+    
+    self.collidingSets = [[NSMutableSet alloc] init];
+
     [self.window setRootViewController:vc];
+    
+    [vc setShouldUpdate:TRUE];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+
+-(NSMutableArray *)createSnowWithFlaiks:(int)numFlaiks
+{
+    float gravityDown = 8/60.0;
+    //float gravityDown = 10.0/60.0;
+    Force *gravityForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
+    
+    NSMutableArray *objects = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < numFlaiks; i++)
+    {
+        NSMutableArray *forces = [[NSMutableArray alloc] init];
+        [forces addObject:gravityForce];
+        
+        int randX = 175;//(arc4random() % 310) + 5;
+        int randY = 5;
+        PhysicsObject *newSnowFlaik = [[PhysicsObject alloc] initWithFrame:CGRectMake(randX, randY, 10, 10) initialForces:forces andImage:nil];
+        newSnowFlaik.objectTag = @"snowflaik";
+        
+        [objects addObject:newSnowFlaik];
+    }
+    
+    PhysicsObject *ground = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 300, 320, 10) initialForces:nil andImage:nil];
+    ground.objectTag = @"ground";
+    [ground setBackgroundColor:[UIColor brownColor]];
+    [objects addObject:ground];
+    
+    return objects;
+}
+
+-(void)resetSnowFlaik:(PhysicsObject *)snowFlaik
+{
+    //int randX = (arc4random() % 310) + 5;
+    //[snowFlaik setFrame:CGRectMake(randX, -5, 5, 5)];
+    //[snowFlaik setVelocity:CGSizeMake(0, 0)];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -48,6 +92,84 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - PhysicsLandscapeViewControllerDelegate Methods
+-(void)collisionDidOccurWithPhysicsLandscape:(PhysicsLandscapeViewController *)_landscape andObjects:(NSMutableArray *)_objects
+{
+    NSArray *firstCollisionsSet = [[_objects firstObject] allObjects];
+    PhysicsObject *object1 = [firstCollisionsSet firstObject];
+    PhysicsObject *object2 = [firstCollisionsSet lastObject];
+    
+    /*
+    NSMutableSet *objectsToRemove = [[NSMutableSet alloc] init];
+    for(PhysicsObject *temp in self.collidingSets.allObjects)
+    {
+        BOOL found = FALSE;
+        if([object1 isEqual:temp])
+        {
+            //found = TRUE;
+        }
+        
+        if(!found)
+            [objectsToRemove addObject:object1];
+        
+        found = FALSE;
+        
+        if([object2 isEqual:temp])
+        {
+            //found = TRUE;
+        }
+        
+        if(!found)
+            [objectsToRemove addObject:object2];
+    }
+    
+    for(PhysicsObject *removeMe in objectsToRemove)
+    {
+        [self.collidingSets removeObject:removeMe];
+    }*/
+    
+    if([object1.objectTag isEqualToString:@"snowflaik"])
+    {
+        if(![self.collidingSets containsObject:object1])
+        {
+            object1.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
+            
+            //NSLog(@"NUM FORCES: %d", object1.forces.count);
+            
+            Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-8] andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
+            NSMutableArray *forces = object1.forces;
+            [forces addObject:upForce];
+            
+            //[self.collidingSets addObject:object1];
+        }
+        else
+        {
+            //NSLog(@"ALREADY HERE");
+        }
+        
+    }
+    if([object2.objectTag isEqualToString:@"snowflaik"])
+    {
+        if(![self.collidingSets containsObject:object2])
+        {
+            object2.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
+            //NSLog(@"NUM FORCES: %d", object2.forces.count);
+            
+            Force *upForce = [[Force alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-8] andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
+            NSMutableArray *forces = object2.forces;
+            [forces addObject:upForce];
+            
+            //[self.collidingSets addObject:object2];
+        }
+        else
+        {
+            //NSLog(@"ALREADY HERE");
+        }
+        
+    }
+    //NSLog(@"COLLISONS OBJECTS: %d", _objects.count);
 }
 
 @end

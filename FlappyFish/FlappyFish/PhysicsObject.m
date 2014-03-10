@@ -27,17 +27,19 @@
         [self addSubview:self.image];
         
         self.forces = [[NSMutableArray alloc] initWithArray:initialForces];
+        
+        self.physicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.layer.position.x andY:self.layer.position.y];
     }
     return self;
 }
 
 -(void)updateVelocity
 {
-    int currentVelocityHeight = self.velocity.height;
-    int currentVelocityWidth = self.velocity.width;
+    float currentVelocityHeight = self.velocity.height;
+    float currentVelocityWidth = self.velocity.width;
     
-    int currentAccelerationHeight = 0;
-    int currentAccelerationWidth = 0;
+    float currentAccelerationHeight = 0;
+    float currentAccelerationWidth = 0;
     
     NSMutableArray *forcesToRemove = [[NSMutableArray alloc] init];
     for(Force *force in self.forces)
@@ -45,14 +47,15 @@
         if(force.isVelocity)
         {
             //Velocity Sum
-            force.added = TRUE;
-            int tempVelocityWidth = force.velocity.width;
-            int tempVelocityHeight = force.velocity.height;
+            float tempVelocityWidth = force.velocity.width;
+            float tempVelocityHeight = force.velocity.height;
             
-            if(force.maxStepsToApply == -1 || force.maxStepsToApply >= force.currentStep)
+            if(force.added == FALSE || force.maxStepsToApply >= force.currentStep)
             {
                 currentVelocityHeight += tempVelocityHeight;
                 currentVelocityWidth += tempVelocityWidth;
+                
+                force.added = TRUE;
             }
             else
             {
@@ -62,14 +65,15 @@
         else
         {
             //Acceleration Sum
-            force.added = TRUE;
-            int tempAccelerationWidth = force.acceleration.width;
-            int tempAccelerationHeight = force.acceleration.height;
+            float tempAccelerationWidth = force.acceleration.width;
+            float tempAccelerationHeight = force.acceleration.height;
             
             if(force.maxStepsToApply == -1 || force.maxStepsToApply >= force.currentStep)
             {
                 currentAccelerationHeight += tempAccelerationHeight;
                 currentAccelerationWidth += tempAccelerationWidth;
+                
+                force.added = TRUE;
             }
             else
             {
@@ -80,37 +84,48 @@
         force.currentStep++;
     }
     
-    self.velocity = CGSizeMake(currentVelocityWidth + currentAccelerationWidth, currentVelocityHeight + currentAccelerationHeight);
+    self.velocity = [[PhysicsVector alloc] initWithWidth:currentVelocityWidth + currentAccelerationWidth andHeight:currentVelocityHeight + currentAccelerationHeight];
     for(Force *removeForce in forcesToRemove)
     {
         [self.forces removeObject:removeForce];
     }
 
-    CGSize currentVelocity = self.velocity;
-    int height = currentVelocity.height;
-    int width = currentVelocity.width;
+    PhysicsVector *currentVelocity = self.velocity;
+    float height = currentVelocity.height;
+    float width = currentVelocity.width;
     
-    self.velocity = CGSizeMake(width, height);
+    self.velocity = [[PhysicsVector alloc] initWithWidth:width andHeight:height];
 }
 
 -(void)updatePositionWithInterval:(float)interval
 {
     [self updateVelocity];
-
-    CGPoint currentPosition = CGPointMake(self.frame.origin.x + (self.frame.size.width / 2), self.frame.origin.y/* + (self.frame.size.height / 2)*/);
-    CGPoint newPosition = CGPointMake(self.frame.origin.x + self.velocity.width + (self.frame.size.width / 2), self.frame.origin.y + self.velocity.height + (self.frame.size.height / 2));
     
-    NSLog(@"OLD-Y: %.0f", currentPosition.y);
-    NSLog(@"NEW-Y: %.0f", newPosition.y);
+    if([self.objectTag isEqualToString:@"snowflaik"])
+        NSLog(@"NUM FORCES: %d", self.forces.count);
+    
+    PhysicsObjectPosition *currentPosition = self.physicsPosition;
+    PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + self.velocity.width andY:currentPosition.y + self.velocity.height];
+    
+    CGPoint roundedCurrentPosition = CGPointMake(abs(currentPosition.x), abs(currentPosition.y));
+    CGPoint roundedNewPosition = CGPointMake(abs(newPosition.x), abs(newPosition.y));
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setFromValue:[NSValue valueWithCGPoint:currentPosition]];
-    [animation setToValue:[NSValue valueWithCGPoint:newPosition]];
-    self.layer.position = newPosition;
-    animation.duration = 2;
+    [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];
+    [animation setToValue:[NSValue valueWithCGPoint:roundedNewPosition]];
+    self.layer.position = roundedNewPosition;
+    self.physicsPosition = newPosition;
+    animation.duration = interval;
     animation.removedOnCompletion = FALSE;
     
     [self.layer addAnimation:animation forKey:nil];
+
+}
+
+-(void)printRect:(CGRect)rect
+{
+    NSLog(@"X: %.0f - Y: %.0f - W: %.0f - H: %.0f", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    NSLog(@"-------------------------------");
 }
 
 @end

@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PhysicsVector.h"
 
 @interface Force : NSObject
 
-@property CGSize velocity;
-@property CGSize acceleration;
+@property PhysicsVector *velocity;
+@property PhysicsVector *acceleration;
 
 @property int maxStepsToApply;
 @property int currentStep;
@@ -22,6 +23,6 @@
 
 @property (nonatomic, strong) NSString *tag;
 
--(id)initWithInitialVector:(CGSize)initialVector andIsVelocity:(BOOL)isVelocity andMaxSteps:(int)maxSteps andTag:(NSString *)tag;
+-(id)initWithInitialVector:(PhysicsVector *)initialVector andIsVelocity:(BOOL)isVelocity andMaxSteps:(int)maxSteps andTag:(NSString *)tag;
 
 @end

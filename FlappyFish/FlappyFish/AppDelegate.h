@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GravityViewController.h"
+#import "PhysicsEngineHeader.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, PhysicsLandscapeDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) NSMutableSet *collidingSets;
 
 @end

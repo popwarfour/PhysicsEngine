@@ -10,7 +10,7 @@
 
 @implementation Force
 
--(id)initWithInitialVector:(CGSize)initialVector andIsVelocity:(BOOL)isVelocity andMaxSteps:(int)maxSteps andTag:(NSString *)tag
+-(id)initWithInitialVector:(PhysicsVector *)initialVector andIsVelocity:(BOOL)isVelocity andMaxSteps:(int)maxSteps andTag:(NSString *)tag
 {
     if(self = [super init])
     {

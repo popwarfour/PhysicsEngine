@@ -19,13 +19,14 @@
 		DF1C5CD218CCCB9F00943597 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CBA18CCCB9F00943597 /* UIKit.framework */; };
 		DF1C5CDA18CCCB9F00943597 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF1C5CD818CCCB9F00943597 /* InfoPlist.strings */; };
 		DF1C5CDC18CCCB9F00943597 /* FlappyFishTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CDB18CCCB9F00943597 /* FlappyFishTests.m */; };
-		DF1C5CE718CCCF9000943597 /* GravityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CE618CCCF9000943597 /* GravityViewController.m */; };
+		DF1C5CE718CCCF9000943597 /* PhysicsLandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CE618CCCF9000943597 /* PhysicsLandscapeViewController.m */; };
 		DF1C5CEA18CCD03900943597 /* PhysicsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CE918CCD03900943597 /* PhysicsObject.m */; };
 		DF1C5CEC18CCD44200943597 /* GravityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF1C5CEB18CCD44200943597 /* GravityView.xib */; };
 		DF1C5CEF18CCDFC000943597 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CEE18CCDFC000943597 /* QuartzCore.framework */; };
 		DF1C5CF118CCE0A900943597 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CF018CCE0A900943597 /* CoreMotion.framework */; };
 		DF1C5CF518CCF29C00943597 /* Force.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CF418CCF29C00943597 /* Force.m */; };
-		DF1C5CF818CD102A00943597 /* PhysicsLandscape.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CF718CD102A00943597 /* PhysicsLandscape.m */; };
+		DF1C5CFB18CE25D400943597 /* PhysicsVector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFA18CE25D400943597 /* PhysicsVector.m */; };
+		DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +56,8 @@
 		DF1C5CD718CCCB9F00943597 /* FlappyFishTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FlappyFishTests-Info.plist"; sourceTree = "<group>"; };
 		DF1C5CD918CCCB9F00943597 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DF1C5CDB18CCCB9F00943597 /* FlappyFishTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlappyFishTests.m; sourceTree = "<group>"; };
-		DF1C5CE518CCCF9000943597 /* GravityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GravityViewController.h; sourceTree = "<group>"; };
-		DF1C5CE618CCCF9000943597 /* GravityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GravityViewController.m; sourceTree = "<group>"; };
+		DF1C5CE518CCCF9000943597 /* PhysicsLandscapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsLandscapeViewController.h; sourceTree = "<group>"; };
+		DF1C5CE618CCCF9000943597 /* PhysicsLandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsLandscapeViewController.m; sourceTree = "<group>"; };
 		DF1C5CE818CCD03900943597 /* PhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsObject.h; sourceTree = "<group>"; };
 		DF1C5CE918CCD03900943597 /* PhysicsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsObject.m; sourceTree = "<group>"; };
 		DF1C5CEB18CCD44200943597 /* GravityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GravityView.xib; sourceTree = "<group>"; };
@@ -64,8 +65,11 @@
 		DF1C5CF018CCE0A900943597 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		DF1C5CF318CCF29C00943597 /* Force.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Force.h; sourceTree = "<group>"; };
 		DF1C5CF418CCF29C00943597 /* Force.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Force.m; sourceTree = "<group>"; };
-		DF1C5CF618CD102A00943597 /* PhysicsLandscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsLandscape.h; sourceTree = "<group>"; };
-		DF1C5CF718CD102A00943597 /* PhysicsLandscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsLandscape.m; sourceTree = "<group>"; };
+		DF1C5CF918CE25D400943597 /* PhysicsVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsVector.h; sourceTree = "<group>"; };
+		DF1C5CFA18CE25D400943597 /* PhysicsVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsVector.m; sourceTree = "<group>"; };
+		DF1C5CFD18CE26AF00943597 /* PhysicsEngineHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsEngineHeader.h; sourceTree = "<group>"; };
+		DF1C5CFE18CE28C500943597 /* PhysicsObjectPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsObjectPosition.h; sourceTree = "<group>"; };
+		DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsObjectPosition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +138,6 @@
 				DF1C5CC618CCCB9F00943597 /* AppDelegate.m */,
 				DF1C5CC818CCCB9F00943597 /* Images.xcassets */,
 				DF1C5CBD18CCCB9F00943597 /* Supporting Files */,
-				DF1C5CE518CCCF9000943597 /* GravityViewController.h */,
-				DF1C5CE618CCCF9000943597 /* GravityViewController.m */,
 				DF1C5CEB18CCD44200943597 /* GravityView.xib */,
 			);
 			path = FlappyFish;
@@ -173,12 +175,17 @@
 		DF1C5CF218CCEBA900943597 /* PhysicsEngine */ = {
 			isa = PBXGroup;
 			children = (
+				DF1C5CFD18CE26AF00943597 /* PhysicsEngineHeader.h */,
 				DF1C5CE818CCD03900943597 /* PhysicsObject.h */,
 				DF1C5CE918CCD03900943597 /* PhysicsObject.m */,
 				DF1C5CF318CCF29C00943597 /* Force.h */,
 				DF1C5CF418CCF29C00943597 /* Force.m */,
-				DF1C5CF618CD102A00943597 /* PhysicsLandscape.h */,
-				DF1C5CF718CD102A00943597 /* PhysicsLandscape.m */,
+				DF1C5CE518CCCF9000943597 /* PhysicsLandscapeViewController.h */,
+				DF1C5CE618CCCF9000943597 /* PhysicsLandscapeViewController.m */,
+				DF1C5CF918CE25D400943597 /* PhysicsVector.h */,
+				DF1C5CFA18CE25D400943597 /* PhysicsVector.m */,
+				DF1C5CFE18CE28C500943597 /* PhysicsObjectPosition.h */,
+				DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */,
 			);
 			name = PhysicsEngine;
 			sourceTree = "<group>";
@@ -279,12 +286,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF1C5CFB18CE25D400943597 /* PhysicsVector.m in Sources */,
 				DF1C5CEA18CCD03900943597 /* PhysicsObject.m in Sources */,
-				DF1C5CF818CD102A00943597 /* PhysicsLandscape.m in Sources */,
+				DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */,
 				DF1C5CC718CCCB9F00943597 /* AppDelegate.m in Sources */,
 				DF1C5CF518CCF29C00943597 /* Force.m in Sources */,
 				DF1C5CC318CCCB9F00943597 /* main.m in Sources */,
-				DF1C5CE718CCCF9000943597 /* GravityViewController.m in Sources */,
+				DF1C5CE718CCCF9000943597 /* PhysicsLandscapeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +497,7 @@
 				DF1C5CE118CCCB9F00943597 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF1C5CE218CCCB9F00943597 /* Build configuration list for PBXNativeTarget "FlappyFishTests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +506,7 @@
 				DF1C5CE418CCCB9F00943597 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
