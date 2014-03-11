@@ -10,20 +10,24 @@
 
 @implementation PhysicsObject
 
-- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(NSString *)image
+- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame
 {
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.image = [[UIImageView alloc] initWithFrame:frame];
+        
         if(image == nil)
         {
             [self setBackgroundColor:[UIColor redColor]];
         }
         else
         {
-            [self.image setImage:[UIImage imageNamed:image]];
+            //[self setBackgroundColor:[UIColor blueColor]];
+            
+            self.image = [[UIImageView alloc] initWithFrame:imageFrame];
+            [self.image setImage:image];
         }
+        
         [self addSubview:self.image];
         
         if([initialForces isKindOfClass:[NSMutableArray class]])

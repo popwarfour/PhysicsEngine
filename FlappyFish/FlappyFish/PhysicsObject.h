@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSString *objectTag;
 @property (nonatomic, strong) PhysicsObjectPosition *physicsPosition;
 
-- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(NSString *)image;
+- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame;
 -(void)updatePositionWithInterval:(float)interval;
 
 @end

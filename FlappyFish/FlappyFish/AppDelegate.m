@@ -14,11 +14,13 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    MenuViewController *menu = [[MenuViewController alloc] initWithNibName:@"MenuView" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:menu];
-    [nav setNavigationBarHidden:TRUE];
+    //MenuViewController *menu = [[MenuViewController alloc] initWithNibName:@"MenuView" bundle:nil];
+    
+    GameViewController *gameVC = [[GameViewController alloc] initWithNibName:@"GameView" bundle:nil];
+    //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:menu];
+    //[nav setNavigationBarHidden:TRUE];
 
-    [self.window setRootViewController:nav];
+    [self.window setRootViewController:gameVC];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

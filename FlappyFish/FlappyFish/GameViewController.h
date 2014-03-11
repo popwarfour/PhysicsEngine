@@ -17,14 +17,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *upButton;
 
 @property (nonatomic, strong) UILabel *gameOverLabel;
-@property (nonatomic, strong) UIButton *startNewGameButton;
 @property (nonatomic, strong) UILabel *scoreLabel;
+@property (nonatomic, strong) UILabel *topScoreLabel;
 
 @property (nonatomic, strong) NSTimer *createNewWallTimer;
-@property (nonatomic, strong) NSTimer *updateScoreTimer;
+
+@property int gameState;
 
 @property int currentScore;
+@property int topScore;
 
-- (IBAction)upButtonPressed:(id)sender;
+- (IBAction)backgroundButtonPressed:(id)sender;
 
 @end

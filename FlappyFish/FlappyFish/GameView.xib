@@ -22,7 +22,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="upButtonPressed:" destination="-1" eventType="touchUpInside" id="LDJ-HW-ZYq"/>
+                        <action selector="backgroundButtonPressed:" destination="-1" eventType="touchUpInside" id="KxE-vo-KtY"/>
                     </connections>
                 </button>
             </subviews>
