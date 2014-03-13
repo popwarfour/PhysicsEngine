@@ -127,7 +127,7 @@
     
     
     //Render & Update Position Only If We're On The Screen!
-    if(TRUE)//[self shouldUpdateWithNewPosition:newPosition])
+    if([self shouldUpdateWithNewPosition:newPosition])
     {
         //Render & Update We're On the Screen!
         CGPoint roundedNewPosition = [newPosition roundValueToCGPoint];
@@ -164,14 +164,13 @@
 {
     PhysicsObjectPosition *currentPosition = self.physicsPosition;
     
-    NSLog(@"Object: %@", self.objectTag);
     BOOL newPositionOutside = FALSE;
     BOOL oldPositionOutside = FALSE;
-    if((newPosition.x + self.frame.size.width) < 0 || newPosition.y < 0 || newPosition.y > 568 || newPosition.x > 320)
+    if((newPosition.x + (self.frame.size.width / 2)) < 0 || newPosition.y + (self.frame.size.height / 2) < 0 || newPosition.y - (self.frame.size.height / 2) > 568 || newPosition.x - (self.frame.size.width / 2) > 320)
     {
         newPositionOutside = TRUE;
     }
-    if((currentPosition.x + self.frame.size.width) < 0 || currentPosition.y < 0 || currentPosition.y > 568 || currentPosition.x > 320)
+    if((currentPosition.x + (self.frame.size.width / 2)) < 0 || currentPosition.y -+ (self.frame.size.height / 2) < 0 || currentPosition.y - (self.frame.size.height / 2) > 568 || currentPosition.x - (self.frame.size.width / 2) > 320)
     {
         oldPositionOutside = TRUE;
     }
