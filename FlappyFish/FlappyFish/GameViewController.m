@@ -51,9 +51,11 @@
     [self.topScoreLabel setTextAlignment:NSTextAlignmentCenter];
     [self.topScoreLabel setText:@"0"];
     
+    
     CGRect curFrame = self.view.frame;
     self.gameView = [[PhysicsLandscape alloc] initWithFrame:curFrame andPhysicsObjects:[self createFishAndWalls] andUpdateInterval:1.0/60.0];
     [self.gameView setPhysicsLandscapeDelegate:self];
+    [self.gameView setShouldShowFrameRate:TRUE];
     [self.view addSubview:self.gameView];
     
     [self.view bringSubviewToFront:self.upButton];
@@ -78,7 +80,7 @@
 
 -(NSMutableArray *)createFishAndWalls
 {
-    float gravityDown = 8/60.0;
+    float gravityDown = 15.0/60.0;
     PhysicsForce *gravityForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
     
     NSMutableArray *objects = [[NSMutableArray alloc] init];
@@ -87,17 +89,17 @@
     int startX = 320/3;
     int startY = 568/2;
     
-    self.fish = [[PhysicsObject alloc] initWithFrame:CGRectMake(startX, startY, 30, 20) initialForces:@[gravityForce] andImage:[UIImage imageNamed:@"test.png"] withImageFrame:CGRectMake(0, 0, 30, 20)];
+    self.fish = [[PhysicsObject alloc] initWithFrame:CGRectMake(startX, startY, 30, 25) initialForces:@[gravityForce] andImage:[UIImage imageNamed:@"test.png"] withImageFrame:CGRectMake(0, 0, 30, 25) andDoesAnimateChanges:FALSE];
     self.fish.objectTag = @"fish";
     [objects addObject:self.fish];
     
     //Create Ground
-    PhysicsObject *top = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, -5, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero];
+    PhysicsObject *top = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, -5, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero  andDoesAnimateChanges:FALSE];
     top.objectTag = @"top";
     [objects addObject:top];
     
     
-    PhysicsObject *bottom = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 568, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero];
+    PhysicsObject *bottom = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 568, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
     bottom.objectTag = @"bottom";
     [objects addObject:bottom];
     
@@ -107,7 +109,7 @@
 
 -(NSMutableArray *)createSnowWithFlaiks:(int)numFlaiks
 {
-    float gravityDown = 8/60.0;
+    float gravityDown = 1.0/60.0;
     //float gravityDown = 10.0/60.0;
     PhysicsForce *gravityForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:gravityDown] andIsVelocity:FALSE andMaxSteps:-1 andTag:@"gravity"];
     
@@ -120,13 +122,13 @@
         
         int randX = 175;//(arc4random() % 310) + 5;
         int randY = 5;
-        PhysicsObject *newSnowFlaik = [[PhysicsObject alloc] initWithFrame:CGRectMake(randX, randY, 10, 10) initialForces:forces andImage:nil withImageFrame:CGRectZero];
+        PhysicsObject *newSnowFlaik = [[PhysicsObject alloc] initWithFrame:CGRectMake(randX, randY, 10, 10) initialForces:forces andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
         newSnowFlaik.objectTag = @"snowflaik";
         
         [objects addObject:newSnowFlaik];
     }
     
-    PhysicsObject *ground = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 300, 320, 10) initialForces:nil andImage:nil withImageFrame:CGRectZero];
+    PhysicsObject *ground = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 300, 320, 10) initialForces:nil andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
     ground.objectTag = @"ground";
     [ground setBackgroundColor:[UIColor brownColor]];
     [objects addObject:ground];
@@ -147,7 +149,7 @@
     {
         self.fish.velocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:0];
         
-        PhysicsForce *upForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-4] andIsVelocity:TRUE andMaxSteps:1 andTag:@"up"];
+        PhysicsForce *upForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:-5.5] andIsVelocity:TRUE andMaxSteps:1 andTag:@"up"];
         NSMutableArray *forces = self.fish.forces;
         [forces addObject:upForce];
     }
@@ -167,10 +169,41 @@
     PhysicsObject *object1 = [firstCollisionsSet firstObject];
     PhysicsObject *object2 = [firstCollisionsSet lastObject];
     
-    [self checkForGameOverCollisionWithObject1:object1 andObject2:object2];
+    //[self checkForGameOverCollisionWithObject1:object1 andObject2:object2];
     
     //[self checkBounceCollisionsWithObject1:object1 andObject2:object2];
 }
+
+
+-(void)landscapeWillUpdateForPhysicsLandscape:(PhysicsLandscape *)_landscape
+{
+    for(PhysicsObject *annoyingObject in _landscape.physicObjects)
+    {
+        if([annoyingObject.objectTag isEqualToString:@"annoyingObject"])
+        {
+            [annoyingObject.forces removeAllObjects];
+            
+            int xObjectCenter = annoyingObject.frame.origin.x + (annoyingObject.frame.size.width / 2);
+            int yObjectCenter = annoyingObject.frame.origin.y + (annoyingObject.frame.size.height / 2);
+            
+            
+            int xFrameCenter = self.fish.frame.origin.x + (self.fish.frame.size.width / 2);
+            int yFrameCenter = self.fish.frame.origin.y + (self.fish.frame.size.height / 2);
+            
+            //int xFrameCenter = 320 / 2;
+            //int yFrameCenter = self.view.frame.size.height / 2;
+            
+            int xDistanceToCenter = xFrameCenter - xObjectCenter;
+            int yDistanceToCenter = yFrameCenter - yObjectCenter;
+            
+            //NSLog(@"NORMALIZED X: %f", xDistanceToCenter / 320.0);
+            //NSLog(@"NORMALIZED Y: %f", yDistanceToCenter / 568.0);
+            PhysicsForce *newForce = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:(xDistanceToCenter / 320.0) andHeight:(yDistanceToCenter / 568.0)] andIsVelocity:TRUE andMaxSteps:1 andTag:@"funForce"];
+            [annoyingObject.forces addObject:newForce];
+        }
+    }
+}
+
 
 -(void)landscapeDidUpdateObject:(PhysicsObject *)object forLandscape:(PhysicsLandscape *)_landscape
 {
@@ -192,13 +225,48 @@
         if([object.objectTag isEqualToString:@"topWall"] && (object.frame.origin.x + object.frame.size.width < fishXLocation) && object.tag > self.currentScore)
         {
             self.currentScore = object.tag;
-            
-            [self updateScoreLabel];
+            [self didLevelUp];
         }
     }
 }
 
 #pragma mark - Game Methods
+-(void)didLevelUp
+{
+    [self updateScoreLabel];
+    
+
+    if(self.currentScore == 1)
+    {
+        NSArray *temp = [self addAnnoyingThing:6];
+        [self.gameView addNewPhysicsObjects:temp];
+    }
+    else if(self.currentScore == 3)
+    {
+        for(PhysicsObject *temp in self.gameView.physicObjects)
+        {
+            if([temp.objectTag isEqualToString:@"annoyingObject"])
+            {
+                [self.gameView removePhysicsObject:temp];
+            }
+        }
+    }
+    else if(self.currentScore == 5)
+    {
+        NSArray *temp = [self addAnnoyingThing:12];
+        [self.gameView addNewPhysicsObjects:temp];
+    }
+    else if(self.currentScore == 7)
+    {
+        for(PhysicsObject *temp in self.gameView.physicObjects)
+        {
+            if([temp.objectTag isEqualToString:@"annoyingObject"])
+            {
+                [self.gameView removePhysicsObject:temp];
+            }
+        }
+    }
+}
 -(void)startGame
 {
     self.gameState = GAME_STATE_STARTED;
@@ -208,6 +276,7 @@
     
     self.previousScoreTag = 1;
     self.currentScore = 0;
+    self.extraLives = 0;
     
     [self updateScoreLabel];
     
@@ -219,8 +288,6 @@
             [self.gameView removePhysicsObject:object];
         }
     }
-    
-    [self.gameView updatePhysicsObjectFromAddAndRemoveCache];
     
     //Reset Fish
     int startX = 320/3;
@@ -239,7 +306,8 @@
     //Start Game Engine
     [self.gameView setShouldUpdate:TRUE];
     
-    self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
+    [self addNewMovingWalls];
+    self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
 }
 
 -(void)gameOver
@@ -258,9 +326,10 @@
 
 -(void)checkBounceCollisionsWithObject1:(PhysicsObject *)object1 andObject2:(PhysicsObject *)object2
 {
-    if(([object1.objectTag isEqualToString:@"fish"] || [object1.objectTag isEqualToString:@"bottom"]) && ([object2.objectTag isEqualToString:@"fish"] || [object2.objectTag isEqualToString:@"bottom"]))
+    if(([object1.objectTag isEqualToString:@"fish"] || [object1.objectTag isEqualToString:@"bottom"]) &&
+       ([object2.objectTag isEqualToString:@"fish"] || [object2.objectTag isEqualToString:@"bottom"]))
     {
-        PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:-1 andHeight:object1.velocity.height * -0.9];
+        PhysicsVector *newVelocity = [[PhysicsVector alloc] initWithWidth:0 andHeight:object1.velocity.height * -0.9];
         PhysicsForce *bounceForce = [[PhysicsForce alloc] initWithInitialVector:newVelocity andIsVelocity:TRUE andMaxSteps:1 andTag:@"bounce"];
         NSMutableArray *forces = self.fish.forces;
         [forces addObject:bounceForce];
@@ -272,14 +341,18 @@
 -(void)checkForGameOverCollisionWithObject1:(PhysicsObject *)object1 andObject2:(PhysicsObject *)object2
 {
     //Add Bounce!
-    if([object1.objectTag isEqualToString:@"fish"])
+    if([object1.objectTag isEqualToString:@"fish"] && ![object2.objectTag isEqualToString:@"annoyingObject"])
     {
         if(TRUE)//![object2.objectTag isEqualToString:@"bottom"])
         {
             [self gameOver];
         }
+        else
+        {
+            self.extraLives--;
+        }
     }
-    if([object2.objectTag isEqualToString:@"fish"])
+    if([object2.objectTag isEqualToString:@"fish"] && ![object1.objectTag isEqualToString:@"annoyingObject"])
     {
         if(TRUE)//![object1.objectTag isEqualToString:@"bottom"])
         {
@@ -309,22 +382,36 @@
     [self.gameView addNewPhysicsObjects:walls];
 }
 
+-(NSMutableArray *)addAnnoyingThing:(int)count
+{
+    NSMutableArray *test = [[NSMutableArray alloc] init];
+    for(int i = 0; i < count; i++)
+    {
+        PhysicsForce *force = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"funForce"];
+        PhysicsObject *fun = [[PhysicsObject alloc] initWithFrame:CGRectMake(i * (100), -30 * i, 30, 30) initialForces:@[force] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
+        fun.objectTag = @"annoyingObject";
+        [test addObject:fun];
+    }
+    return test;
+}
+
+
 -(NSArray *)generateNewMovingWalls
 {
     int randGapHeight = 100;//(arc4random() % 50) + 80;
-    int randTopHeight = (arc4random() % 200) + 50;
+    int randTopHeight = (arc4random() % 400) + 50;
     int bottomHeight = self.view.frame.size.height - (randGapHeight + randTopHeight);
     
-    PhysicsForce *leftForceTop = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceTop"];
-    PhysicsForce *leftForceBottom = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (80.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceBottom"];
+    PhysicsForce *leftForceTop = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (120.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceTop"];
+    PhysicsForce *leftForceBottom = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:-1 * (120.0/60.0) andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"leftForceBottom"];
     
-    PhysicsObject *topWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, 50, randTopHeight) initialForces:@[leftForceTop] andImage:nil withImageFrame:CGRectZero];
+    PhysicsObject *topWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, 50, randTopHeight) initialForces:@[leftForceTop] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
     topWall.objectTag = @"topWall";
     topWall.tag = self.previousScoreTag;
     self.previousScoreTag++;
     [topWall setBackgroundColor:[UIColor grayColor]];
     
-    PhysicsObject *bottomWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, randTopHeight + randGapHeight, 50, bottomHeight) initialForces:@[leftForceBottom] andImage:nil withImageFrame:CGRectZero];
+    PhysicsObject *bottomWall = [[PhysicsObject alloc] initWithFrame:CGRectMake(self.view.frame.size.width, randTopHeight + randGapHeight, 50, bottomHeight) initialForces:@[leftForceBottom] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
     bottomWall.objectTag = @"bottomWall";
     [bottomWall setBackgroundColor:[UIColor grayColor]];
     

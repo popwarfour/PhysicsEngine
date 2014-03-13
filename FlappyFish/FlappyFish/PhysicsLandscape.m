@@ -95,21 +95,53 @@
     {
         if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeDidBeginUpdatingForPhysicsLandscape:)])
         {
-            [self.physicsLandscapeDelegate landscapeDidBeginUpdatingForPhysicsLandscape:self];
+            [self.physicsLandscapeDelegate landscapeWillBeginUpdatesForPhysicsLandscape:self];
         }
-        self.loopTimer = [NSTimer scheduledTimerWithTimeInterval:self.updateInterval target:self selector:@selector(loop) userInfo:nil repeats:TRUE];
+        
+        [self beginUpdating];
     }
     else
     {
-        [self.loopTimer invalidate];
         if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeDidEndUpdatingForPhysicsLandscape:)])
         {
-            [self.physicsLandscapeDelegate landscapeDidEndUpdatingForPhysicsLandscape:self];
+            [self.physicsLandscapeDelegate landscapeDidEndUpdatesForPhysicsLandscape:self];
         }
     }
 }
 
--(void)loop
+-(void)beginUpdating
+{
+    self.mainDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(updateAndRender)];
+    [self.mainDisplayLink setFrameInterval:self.updateInterval];
+    [self.mainDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+-(void)updateAndRender
+{
+    //CALC ELAPSED TIME
+    NSDate *currentDate = [NSDate date];
+    double elapsed = 1.0 / [currentDate timeIntervalSinceDate:self.lastUpdate];
+    self.lastUpdate = currentDate;
+    self.lag += elapsed;
+    
+    //UPDATE FRAME COUNTER
+    if(self.displayFrameRate)
+    {
+        [self updateFrameRateLabel:elapsed];
+    }
+    
+    //PROCESS INPUT HERE!
+    
+    while (self.lag >= self.updateInterval)
+    {
+        //UPDATE HERE
+        self.lag -= self.updateInterval;
+    }
+    
+    [self renderFrame:(self.lag / self.updateInterval)];
+}
+
+-(void)renderFrame:(float)positionFraction
 {
     if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeWillUpdateForPhysicsLandscape:)])
 	{
@@ -120,24 +152,51 @@
     
     for(PhysicsObject *object in self.physicObjects)
     {
-        if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeWillUpdateObject:forLandscape:)])
+        if([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeWillUpdateObject:forLandscape:)])
         {
             [self.physicsLandscapeDelegate landscapeWillUpdateObject:object forLandscape:self];
         }
         
-        [object updatePositionWithInterval:self.updateInterval];
+        [object updatePositionWithInterval:positionFraction];
         
-        if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeDidUpdateObject:forLandscape:)])
+        if([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeDidUpdateObject:forLandscape:)])
         {
             [self.physicsLandscapeDelegate landscapeDidUpdateObject:object forLandscape:self];
         }
     }
+    
+    //[NSThread detachNewThreadSelector:@selector(renderFrame) toTarget:self withObject:nil];
     
     [self checkForCollisions];
     
     if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeDidUpdateForPhysicsLandscape:)])
     {
         [self.physicsLandscapeDelegate landscapeDidUpdateForPhysicsLandscape:self];
+    }
+    
+    self.oldFrameRateDate = [NSDate date];
+}
+
+-(void)updateFrameRateLabel:(double)frequency
+{
+    NSString *labelText = [NSString stringWithFormat:@"%.2f", frequency];
+    [self.frameRate setText:labelText];
+}
+
+-(void)setShouldShowFrameRate:(BOOL)showFrameRate
+{
+    if(showFrameRate)
+    {
+        self.displayFrameRate = TRUE;
+        
+        self.frameRate = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 30, 100, 30)];
+        [self addSubview:self.frameRate];
+    }
+    else
+    {
+        self.displayFrameRate = FALSE;
+        
+        [self.frameRate removeFromSuperview];
     }
 }
 

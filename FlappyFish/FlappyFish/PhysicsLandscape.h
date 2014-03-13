@@ -14,8 +14,8 @@
 @protocol PhysicsLandscapeDelegate2 <NSObject>
 
 @optional
--(void) landscapeDidBeginUpdatingForPhysicsLandscape:(PhysicsLandscape *)_landscape;
--(void) landscapeDidEndUpdatingForPhysicsLandscape:(PhysicsLandscape *)_landscape;
+-(void) landscapeWillBeginUpdatesForPhysicsLandscape:(PhysicsLandscape *)_landscape;
+-(void) landscapeDidEndUpdatesForPhysicsLandscape:(PhysicsLandscape *)_landscape;
 -(void) collisionDidOccurWithPhysicsLandscape: (PhysicsLandscape *) _landscape andObjects:(NSMutableArray *)_objects;
 -(void) landscapeWillUpdateForPhysicsLandscape:(PhysicsLandscape *)_landscape;
 -(void) landscapeDidUpdateForPhysicsLandscape:(PhysicsLandscape *)_landscape;
@@ -27,16 +27,31 @@
 @interface PhysicsLandscape : UIView
 
 @property (nonatomic, weak) id <PhysicsLandscapeDelegate2> physicsLandscapeDelegate;
+
+//Updating
 @property float updateInterval;
 @property BOOL isUpdating;
-@property (nonatomic, strong) NSTimer *loopTimer;
+
+//Objects
 @property (nonatomic, strong) NSMutableArray *physicObjects;
 
+//Cache For Objects
 @property (nonatomic, strong) NSMutableArray *objectsToRemove;
 @property (nonatomic, strong) NSMutableArray *objectsToAdd;
 
+//Display Link
+@property (nonatomic, strong) CADisplayLink *mainDisplayLink;
+@property (nonatomic, strong) NSDate *lastUpdate;
+@property int lag;
+
+//Frame Rate Label
+@property (nonatomic, strong) UILabel *frameRate;
+@property (nonatomic, strong) NSDate *oldFrameRateDate;
+@property BOOL displayFrameRate;
+
 
 - (IBAction)upButtonPressed:(id)sender;
+-(void)setShouldShowFrameRate:(BOOL)showFrameRate;
 -(void)setShouldUpdate:(BOOL)shouldUpdate;
 - (id)initWithFrame:(CGRect)frame andPhysicsObjects:(NSMutableArray *)physicsObjects andUpdateInterval:(float)updateInteral;
 -(void)addNewPhysicsObject:(PhysicsObject *)object;

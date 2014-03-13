@@ -10,7 +10,7 @@
 
 @implementation PhysicsObject
 
-- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame
+- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges
 {
     self = [super initWithFrame:frame];
     if (self)
@@ -42,6 +42,8 @@
         {
             NSAssert(FALSE, @"Invalid type of object as initial forces. Must be of type NSArray or NSMutableArray");
         }
+        
+        self.doesAnimateChanges = animateChanges;
         
         self.physicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.layer.position.x andY:self.layer.position.y];
     }
@@ -115,6 +117,9 @@
 
 -(void)updatePositionWithInterval:(float)interval
 {
+    if(self.doesAnimateChanges)
+        [self.layer removeAllAnimations];
+    
     [self updateVelocity];
     
     if([self.objectTag isEqualToString:@"snowflaik"])
@@ -128,20 +133,26 @@
         //NSLog(@"STOP");
     }
     
-    CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];
     CGPoint roundedNewPosition = [newPosition roundValueToCGPoint];
     
-    
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];
-    [animation setToValue:[NSValue valueWithCGPoint:roundedNewPosition]];
-    self.layer.position = roundedNewPosition;
-    self.physicsPosition = newPosition;
-    animation.duration = interval;
-    animation.removedOnCompletion = FALSE;
-    
-    [self.layer addAnimation:animation forKey:nil];
-
+    if(self.doesAnimateChanges)
+    {
+        CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];
+        
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+        [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];
+        [animation setToValue:[NSValue valueWithCGPoint:roundedNewPosition]];
+        self.layer.position = roundedNewPosition;
+        self.physicsPosition = newPosition;
+        animation.duration = interval;
+        animation.removedOnCompletion = FALSE;
+        [self.layer addAnimation:animation forKey:nil];
+    }
+    else
+    {
+        self.layer.position = roundedNewPosition;
+        self.physicsPosition = newPosition;
+    }
 }
 
 -(void)printRect:(CGRect)rect
