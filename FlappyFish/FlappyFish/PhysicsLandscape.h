@@ -49,6 +49,7 @@
 @property (nonatomic, strong) NSDate *oldFrameRateDate;
 @property BOOL displayFrameRate;
 
+@property BOOL renderOffScreen;
 
 - (IBAction)upButtonPressed:(id)sender;
 -(void)setShouldShowFrameRate:(BOOL)showFrameRate;

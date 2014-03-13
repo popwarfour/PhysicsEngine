@@ -106,6 +106,8 @@
         {
             [self.physicsLandscapeDelegate landscapeDidEndUpdatesForPhysicsLandscape:self];
         }
+        
+        [self.mainDisplayLink invalidate];
     }
 }
 

@@ -122,36 +122,67 @@
     
     [self updateVelocity];
     
-    if([self.objectTag isEqualToString:@"snowflaik"])
-        NSLog(@"NUM FORCES: %d", self.forces.count);
-    
     PhysicsObjectPosition *currentPosition = self.physicsPosition;
     PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + self.velocity.width andY:currentPosition.y + self.velocity.height];
     
-    if(newPosition.x < 0 || newPosition.y < 0 || newPosition.y > 568 || newPosition.x > 320)
-    {
-        //NSLog(@"STOP");
-    }
     
-    CGPoint roundedNewPosition = [newPosition roundValueToCGPoint];
-    
-    if(self.doesAnimateChanges)
+    //Render & Update Position Only If We're On The Screen!
+    if(TRUE)//[self shouldUpdateWithNewPosition:newPosition])
     {
-        CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];
+        //Render & Update We're On the Screen!
+        CGPoint roundedNewPosition = [newPosition roundValueToCGPoint];
         
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-        [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];
-        [animation setToValue:[NSValue valueWithCGPoint:roundedNewPosition]];
-        self.layer.position = roundedNewPosition;
-        self.physicsPosition = newPosition;
-        animation.duration = interval;
-        animation.removedOnCompletion = FALSE;
-        [self.layer addAnimation:animation forKey:nil];
+        if(self.doesAnimateChanges)
+        {
+            //Smooth Animate Changes
+            CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];
+            
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+            [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];
+            [animation setToValue:[NSValue valueWithCGPoint:roundedNewPosition]];
+            self.layer.position = roundedNewPosition;
+            self.physicsPosition = newPosition;
+            animation.duration = interval;
+            animation.removedOnCompletion = FALSE;
+            [self.layer addAnimation:animation forKey:nil];
+        }
+        else
+        {
+            //Hard Update Changes
+            self.layer.position = roundedNewPosition;
+            self.physicsPosition = newPosition;
+        }
     }
     else
     {
-        self.layer.position = roundedNewPosition;
+        //Just Update its position for later
         self.physicsPosition = newPosition;
+    }
+}
+
+-(BOOL)shouldUpdateWithNewPosition:(PhysicsObjectPosition *)newPosition
+{
+    PhysicsObjectPosition *currentPosition = self.physicsPosition;
+    
+    NSLog(@"Object: %@", self.objectTag);
+    BOOL newPositionOutside = FALSE;
+    BOOL oldPositionOutside = FALSE;
+    if((newPosition.x + self.frame.size.width) < 0 || newPosition.y < 0 || newPosition.y > 568 || newPosition.x > 320)
+    {
+        newPositionOutside = TRUE;
+    }
+    if((currentPosition.x + self.frame.size.width) < 0 || currentPosition.y < 0 || currentPosition.y > 568 || currentPosition.x > 320)
+    {
+        oldPositionOutside = TRUE;
+    }
+    
+    if(newPositionOutside && oldPositionOutside)
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
     }
 }
 

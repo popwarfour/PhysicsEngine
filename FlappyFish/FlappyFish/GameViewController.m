@@ -169,7 +169,7 @@
     PhysicsObject *object1 = [firstCollisionsSet firstObject];
     PhysicsObject *object2 = [firstCollisionsSet lastObject];
     
-    //[self checkForGameOverCollisionWithObject1:object1 andObject2:object2];
+    [self checkForGameOverCollisionWithObject1:object1 andObject2:object2];
     
     //[self checkBounceCollisionsWithObject1:object1 andObject2:object2];
 }
@@ -235,10 +235,10 @@
 {
     [self updateScoreLabel];
     
-
+    /*
     if(self.currentScore == 1)
     {
-        NSArray *temp = [self addAnnoyingThing:6];
+        NSArray *temp = [self addAnnoyingThing:30];
         [self.gameView addNewPhysicsObjects:temp];
     }
     else if(self.currentScore == 3)
@@ -253,10 +253,10 @@
     }
     else if(self.currentScore == 5)
     {
-        NSArray *temp = [self addAnnoyingThing:12];
+        NSArray *temp = [self addAnnoyingThing:120];
         [self.gameView addNewPhysicsObjects:temp];
     }
-    else if(self.currentScore == 7)
+    else if(self.currentScore == 10)
     {
         for(PhysicsObject *temp in self.gameView.physicObjects)
         {
@@ -265,7 +265,7 @@
                 [self.gameView removePhysicsObject:temp];
             }
         }
-    }
+    }*/
 }
 -(void)startGame
 {
@@ -388,7 +388,7 @@
     for(int i = 0; i < count; i++)
     {
         PhysicsForce *force = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"funForce"];
-        PhysicsObject *fun = [[PhysicsObject alloc] initWithFrame:CGRectMake(i * (100), -30 * i, 30, 30) initialForces:@[force] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
+        PhysicsObject *fun = [[PhysicsObject alloc] initWithFrame:CGRectMake(175, -60 * i, 30, 30) initialForces:@[force] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
         fun.objectTag = @"annoyingObject";
         [test addObject:fun];
     }
