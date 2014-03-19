@@ -113,6 +113,9 @@
 
 -(void)beginUpdating
 {
+    self.lastUpdate = [NSDate date];
+    self.lag = 0.0;
+    
     self.mainDisplayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(updateAndRender)];
     [self.mainDisplayLink setFrameInterval:self.updateInterval];
     [self.mainDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -122,9 +125,11 @@
 {
     //CALC ELAPSED TIME
     NSDate *currentDate = [NSDate date];
-    double elapsed = 1.0 / [currentDate timeIntervalSinceDate:self.lastUpdate];
+    float temp = [currentDate timeIntervalSinceDate:self.lastUpdate];
+    float elapsed = temp;
     self.lastUpdate = currentDate;
     self.lag += elapsed;
+    
     
     //UPDATE FRAME COUNTER
     if(self.displayFrameRate)
@@ -133,17 +138,30 @@
     }
     
     //PROCESS INPUT HERE!
-    
+
     while (self.lag >= self.updateInterval)
     {
+        NSLog(@"************* Elapsed: %f - Lag: %f - Update: %f", elapsed, self.lag, self.updateInterval);
+        
         //UPDATE HERE
         self.lag -= self.updateInterval;
+        
+        [self updateFrame:1];
     }
     
-    [self renderFrame:(self.lag / self.updateInterval)];
+    NSLog(@"RENDERING");
+    
+    [self renderFrame:self.lag / self.updateInterval];
+    
+    /*
+    int counter = 0;
+    for(int i = 0; i < 10000000; i++)
+    {
+        counter++;
+    }*/
 }
 
--(void)renderFrame:(float)positionFraction
+-(void)updateFrame:(float)frequency
 {
     if ([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeWillUpdateForPhysicsLandscape:)])
 	{
@@ -159,15 +177,13 @@
             [self.physicsLandscapeDelegate landscapeWillUpdateObject:object forLandscape:self];
         }
         
-        [object updatePositionWithInterval:positionFraction];
+        [object updatePosition:frequency];
         
         if([self.physicsLandscapeDelegate respondsToSelector: @selector(landscapeDidUpdateObject:forLandscape:)])
         {
             [self.physicsLandscapeDelegate landscapeDidUpdateObject:object forLandscape:self];
         }
     }
-    
-    //[NSThread detachNewThreadSelector:@selector(renderFrame) toTarget:self withObject:nil];
     
     [self checkForCollisions];
     
@@ -177,6 +193,14 @@
     }
     
     self.oldFrameRateDate = [NSDate date];
+}
+
+-(void)renderFrame:(float)positionFraction
+{
+    for(PhysicsObject *object in self.physicObjects)
+    {
+        [object renderNewPosition:positionFraction];
+    }
 }
 
 -(void)updateFrameRateLabel:(double)frequency
@@ -207,7 +231,15 @@
 {
     if(![object1 isEqual:object2])
     {
+        //CGRect object1Frame = CGRectMake(object1.currentPhysicsPosition.x, object1.currentPhysicsPosition.y, object1.frame.size.width, object1.frame.size.height);
+        //CGRect object2Frame = CGRectMake(object2.currentPhysicsPosition.x - (object2.frame.size.width / 2), object2.currentPhysicsPosition.y - (object2.frame), object2.frame.size.width, object2.frame.size.height);
+        
+        if([object1.objectTag isEqualToString:@"fish"] || [object2.objectTag isEqualToString:@"fish"])
+            NSLog(@"STOP");
         BOOL value = CGRectIntersectsRect(object1.frame, object2.frame);
+        
+        if(value == true)
+            NSLog(@"STOP");
         return value;
     }
     else

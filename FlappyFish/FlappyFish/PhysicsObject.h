@@ -19,11 +19,15 @@
 @property (nonatomic, strong) NSMutableArray *forces;
 @property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, strong) NSString *objectTag;
-@property (nonatomic, strong) PhysicsObjectPosition *physicsPosition;
+@property (nonatomic, strong) PhysicsObjectPosition *currentPhysicsPosition;
+@property (nonatomic, strong) PhysicsObjectPosition *updatedPhysicsPosition;
 @property BOOL doesAnimateChanges;
 
 
 - (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges;
--(void)updatePositionWithInterval:(float)interval;
+
+-(void)updatePosition:(float)frequency;
+
+-(void)renderNewPosition:(float)interval;
 
 @end

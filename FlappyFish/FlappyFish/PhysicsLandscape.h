@@ -42,7 +42,7 @@
 //Display Link
 @property (nonatomic, strong) CADisplayLink *mainDisplayLink;
 @property (nonatomic, strong) NSDate *lastUpdate;
-@property int lag;
+@property float lag;
 
 //Frame Rate Label
 @property (nonatomic, strong) UILabel *frameRate;

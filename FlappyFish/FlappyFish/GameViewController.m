@@ -94,12 +94,12 @@
     [objects addObject:self.fish];
     
     //Create Ground
-    PhysicsObject *top = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, -5, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero  andDoesAnimateChanges:FALSE];
+    PhysicsObject *top = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 0, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero  andDoesAnimateChanges:FALSE];
     top.objectTag = @"top";
     [objects addObject:top];
     
     
-    PhysicsObject *bottom = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 568, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
+    PhysicsObject *bottom = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, 568 - 5, 320, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
     bottom.objectTag = @"bottom";
     [objects addObject:bottom];
     
@@ -293,7 +293,8 @@
     int startX = 320/3;
     int startY = 568/2;
     [self.fish setFrame:CGRectMake(startX, startY, self.fish.frame.size.width, self.fish.frame.size.height)];
-    [self.fish setPhysicsPosition:[[PhysicsObjectPosition alloc] initWithX:self.fish.layer.position.x andY:self.fish.layer.position.y]];
+    [self.fish setCurrentPhysicsPosition:[[PhysicsObjectPosition alloc] initWithX:self.fish.layer.position.x andY:self.fish.layer.position.y]];
+    [self.fish setUpdatedPhysicsPosition:nil];
     [self.fish setVelocity:[[PhysicsVector alloc] initWithWidth:0 andHeight:0]];
     for(PhysicsForce *force in self.fish.forces)
     {
@@ -303,11 +304,14 @@
         }
     }
     
+    //NSArray *temp = [self addAnnoyingThing:100];
+    //[self.gameView addNewPhysicsObjects:temp];
+    
     //Start Game Engine
     [self.gameView setShouldUpdate:TRUE];
     
-    [self addNewMovingWalls];
-    self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
+    //[self addNewMovingWalls];
+    //self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
 }
 
 -(void)gameOver
@@ -388,7 +392,7 @@
     for(int i = 0; i < count; i++)
     {
         PhysicsForce *force = [[PhysicsForce alloc] initWithInitialVector:[[PhysicsVector alloc] initWithWidth:0 andHeight:0] andIsVelocity:TRUE andMaxSteps:-1 andTag:@"funForce"];
-        PhysicsObject *fun = [[PhysicsObject alloc] initWithFrame:CGRectMake(175, -60 * i, 30, 30) initialForces:@[force] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
+        PhysicsObject *fun = [[PhysicsObject alloc] initWithFrame:CGRectMake(175, 200 + (i), 30, 30) initialForces:@[force] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE];
         fun.objectTag = @"annoyingObject";
         [test addObject:fun];
     }

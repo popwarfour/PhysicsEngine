@@ -43,9 +43,9 @@
             NSAssert(FALSE, @"Invalid type of object as initial forces. Must be of type NSArray or NSMutableArray");
         }
         
-        self.doesAnimateChanges = animateChanges;
+        self.currentPhysicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.layer.position.x andY:self.layer.position.y];
         
-        self.physicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.layer.position.x andY:self.layer.position.y];
+        self.doesAnimateChanges = animateChanges;
     }
     return self;
 }
@@ -115,33 +115,56 @@
     self.velocity = [[PhysicsVector alloc] initWithWidth:width andHeight:height];*/
 }
 
--(void)updatePositionWithInterval:(float)interval
+-(void)updatePosition:(float)frequency
 {
     if(self.doesAnimateChanges)
         [self.layer removeAllAnimations];
     
+    if([self.objectTag isEqualToString:@"bottom"])
+        NSLog(@"STOP");
+    
     [self updateVelocity];
     
-    PhysicsObjectPosition *currentPosition = self.physicsPosition;
-    PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + self.velocity.width andY:currentPosition.y + self.velocity.height];
+    if(self.currentPhysicsPosition == nil)
+    {
+        self.currentPhysicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.frame.origin.x + (self.frame.size.width / 2) andY:self.frame.origin.y + (self.frame.size.height / 2)];
+    }
     
+    PhysicsObjectPosition *currentPosition = self.currentPhysicsPosition;
+    PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + self.velocity.width andY:currentPosition.y + self.velocity.height];
+    self.updatedPhysicsPosition = newPosition;
+}
+
+-(void)renderNewPosition:(float)interval
+{
+    if([self.objectTag isEqualToString:@"bottom"])
+        NSLog(@"STOP");
     
     //Render & Update Position Only If We're On The Screen!
-    if([self shouldUpdateWithNewPosition:newPosition])
+    if([self shouldUpdateWithNewPosition:self.updatedPhysicsPosition])
     {
         //Render & Update We're On the Screen!
-        CGPoint roundedNewPosition = [newPosition roundValueToCGPoint];
+        CGPoint roundedNewPosition;
+        if(self.updatedPhysicsPosition != nil)
+        {
+            roundedNewPosition = [self.updatedPhysicsPosition roundValueToCGPoint];
+        }
+        else
+        {
+            roundedNewPosition = [self.currentPhysicsPosition roundValueToCGPoint];
+        }
         
         if(self.doesAnimateChanges)
         {
             //Smooth Animate Changes
-            CGPoint roundedCurrentPosition = [currentPosition roundValueToCGPoint];
+            CGPoint roundedCurrentPosition = [self.currentPhysicsPosition roundValueToCGPoint];
             
             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
             [animation setFromValue:[NSValue valueWithCGPoint:roundedCurrentPosition]];
             [animation setToValue:[NSValue valueWithCGPoint:roundedNewPosition]];
             self.layer.position = roundedNewPosition;
-            self.physicsPosition = newPosition;
+            if(self.updatedPhysicsPosition != nil)
+                self.currentPhysicsPosition = self.updatedPhysicsPosition;
             animation.duration = interval;
             animation.removedOnCompletion = FALSE;
             [self.layer addAnimation:animation forKey:nil];
@@ -150,19 +173,15 @@
         {
             //Hard Update Changes
             self.layer.position = roundedNewPosition;
-            self.physicsPosition = newPosition;
+            if(self.updatedPhysicsPosition != nil)
+                self.currentPhysicsPosition = self.updatedPhysicsPosition;
         }
-    }
-    else
-    {
-        //Just Update its position for later
-        self.physicsPosition = newPosition;
     }
 }
 
 -(BOOL)shouldUpdateWithNewPosition:(PhysicsObjectPosition *)newPosition
 {
-    PhysicsObjectPosition *currentPosition = self.physicsPosition;
+    PhysicsObjectPosition *currentPosition = self.currentPhysicsPosition;
     
     BOOL newPositionOutside = FALSE;
     BOOL oldPositionOutside = FALSE;
