@@ -120,9 +120,6 @@
     if(self.doesAnimateChanges)
         [self.layer removeAllAnimations];
     
-    if([self.objectTag isEqualToString:@"bottom"])
-        NSLog(@"STOP");
-    
     [self updateVelocity];
     
     if(self.currentPhysicsPosition == nil)
@@ -131,15 +128,12 @@
     }
     
     PhysicsObjectPosition *currentPosition = self.currentPhysicsPosition;
-    PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + self.velocity.width andY:currentPosition.y + self.velocity.height];
+    PhysicsObjectPosition *newPosition = [[PhysicsObjectPosition alloc] initWithX:currentPosition.x + (frequency * self.velocity.width) andY:currentPosition.y + (frequency * self.velocity.height)];
     self.updatedPhysicsPosition = newPosition;
 }
 
 -(void)renderNewPosition:(float)interval
 {
-    if([self.objectTag isEqualToString:@"bottom"])
-        NSLog(@"STOP");
-    
     //Render & Update Position Only If We're On The Screen!
     if([self shouldUpdateWithNewPosition:self.updatedPhysicsPosition])
     {

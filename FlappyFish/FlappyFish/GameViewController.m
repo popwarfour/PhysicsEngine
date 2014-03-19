@@ -22,7 +22,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -310,8 +311,8 @@
     //Start Game Engine
     [self.gameView setShouldUpdate:TRUE];
     
-    //[self addNewMovingWalls];
-    //self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
+    [self addNewMovingWalls];
+    self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
 }
 
 -(void)gameOver

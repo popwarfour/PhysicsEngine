@@ -138,10 +138,9 @@
     }
     
     //PROCESS INPUT HERE!
-
     while (self.lag >= self.updateInterval)
     {
-        NSLog(@"************* Elapsed: %f - Lag: %f - Update: %f", elapsed, self.lag, self.updateInterval);
+        //NSLog(@"************* Elapsed: %f - Lag: %f - Update: %f", elapsed, self.lag, self.updateInterval);
         
         //UPDATE HERE
         self.lag -= self.updateInterval;
@@ -149,16 +148,7 @@
         [self updateFrame:1];
     }
     
-    NSLog(@"RENDERING");
-    
-    [self renderFrame:self.lag / self.updateInterval];
-    
-    /*
-    int counter = 0;
-    for(int i = 0; i < 10000000; i++)
-    {
-        counter++;
-    }*/
+    [self renderFrame:(self.lag / self.updateInterval)];
 }
 
 -(void)updateFrame:(float)frequency
@@ -197,6 +187,11 @@
 
 -(void)renderFrame:(float)positionFraction
 {
+    //NSLog(@"RENDER: %f", positionFraction);
+    if(positionFraction > 1)
+        NSLog(@"WTF");
+    
+    
     for(PhysicsObject *object in self.physicObjects)
     {
         [object renderNewPosition:positionFraction];
@@ -231,15 +226,7 @@
 {
     if(![object1 isEqual:object2])
     {
-        //CGRect object1Frame = CGRectMake(object1.currentPhysicsPosition.x, object1.currentPhysicsPosition.y, object1.frame.size.width, object1.frame.size.height);
-        //CGRect object2Frame = CGRectMake(object2.currentPhysicsPosition.x - (object2.frame.size.width / 2), object2.currentPhysicsPosition.y - (object2.frame), object2.frame.size.width, object2.frame.size.height);
-        
-        if([object1.objectTag isEqualToString:@"fish"] || [object2.objectTag isEqualToString:@"fish"])
-            NSLog(@"STOP");
         BOOL value = CGRectIntersectsRect(object1.frame, object2.frame);
-        
-        if(value == true)
-            NSLog(@"STOP");
         return value;
     }
     else
