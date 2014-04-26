@@ -26,11 +26,14 @@
 @property (nonatomic, strong) PhysicsObjectPosition *updatedPhysicsPosition;
 @property BOOL doesAnimateChanges;
 
-
+//Constructor
 - (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges andLandscape:(PhysicsLandscape *)landscape;
 
+//Physics Engine Methods
 -(void)updatePosition:(float)frequency;
-
 -(void)renderNewPosition:(float)interval;
+
+//Utility Methods
+-(void)printObjectInformation;
 
 @end

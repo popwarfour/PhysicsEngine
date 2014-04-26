@@ -53,6 +53,8 @@
     return self;
 }
 
+#pragma mark - Physics Engine
+#pragma mark Calculate New Velocity
 -(void)updateVelocity
 {
     float currentVelocityHeight = self.velocity.height;
@@ -118,6 +120,8 @@
     self.velocity = [[PhysicsVector alloc] initWithWidth:width andHeight:height];*/
 }
 
+#pragma mark Update Position
+
 -(void)updatePosition:(float)frequency
 {
     if(self.doesAnimateChanges)
@@ -135,15 +139,39 @@
     self.updatedPhysicsPosition = newPosition;
 }
 
+#pragma mark Render New Position
+
+-(BOOL)shouldRenderWithNewPosition:(PhysicsObjectPosition *)newPosition
+{
+    PhysicsObjectPosition *currentPosition = self.currentPhysicsPosition;
+    
+    BOOL newPositionOutside = FALSE;
+    BOOL oldPositionOutside = FALSE;
+    
+    if((newPosition.x + (self.frame.size.width / 2)) < 0 || newPosition.y + (self.frame.size.height / 2) < 0 || newPosition.y - (self.frame.size.height / 2) > self.landscape.frame.size.height || newPosition.x - (self.frame.size.width / 2) > self.landscape.frame.size.width)
+    {
+        newPositionOutside = TRUE;
+    }
+    if((currentPosition.x + (self.frame.size.width / 2)) < 0 || currentPosition.y + (self.frame.size.height / 2) < 0 || currentPosition.y - (self.frame.size.height / 2) > self.landscape.frame.size.height || currentPosition.x - (self.frame.size.width / 2) > self.landscape.frame.size.width)
+    {
+        oldPositionOutside = TRUE;
+    }
+    
+    if(newPositionOutside && oldPositionOutside)
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+}
+
 -(void)renderNewPosition:(float)interval
 {
     //Render & Update Position Only If We're On The Screen!
     if([self shouldRenderWithNewPosition:self.updatedPhysicsPosition])
     {
-        if([self.objectTag isEqualToString:@"topWall"])
-        {
-            NSLog(@"CHECK");
-        }
         //Render & Update We're On the Screen!
         CGPoint roundedNewPosition;
         if(self.updatedPhysicsPosition != nil)
@@ -180,35 +208,18 @@
     }
 }
 
--(BOOL)shouldRenderWithNewPosition:(PhysicsObjectPosition *)newPosition
-{
-    PhysicsObjectPosition *currentPosition = self.currentPhysicsPosition;
-    
-    BOOL newPositionOutside = FALSE;
-    BOOL oldPositionOutside = FALSE;
-    if((newPosition.x + (self.frame.size.width / 2)) < 0 || newPosition.y + (self.frame.size.height / 2) < 0 || newPosition.y - (self.frame.size.height / 2) > self.landscape.frame.size.height || newPosition.x - (self.frame.size.width / 2) > self.landscape.frame.size.width)
-    {
-        newPositionOutside = TRUE;
-    }
-    if((currentPosition.x + (self.frame.size.width / 2)) < 0 || currentPosition.y -+ (self.frame.size.height / 2) < 0 || currentPosition.y - (self.frame.size.height / 2) > self.landscape.frame.size.height || currentPosition.x - (self.frame.size.width / 2) > self.landscape.frame.size.width)
-    {
-        oldPositionOutside = TRUE;
-    }
-    
-    if(newPositionOutside && oldPositionOutside)
-    {
-        return FALSE;
-    }
-    else
-    {
-        return TRUE;
-    }
-}
-
+#pragma mark - Utility Methods
+#pragma mark Print Information
 -(void)printRect:(CGRect)rect
 {
     NSLog(@"X: %.0f - Y: %.0f - W: %.0f - H: %.0f", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-    NSLog(@"-------------------------------");
+}
+-(void)printObjectInformation
+{
+    NSLog(@"Object-Tag: %@ | Tag: %d", self.objectTag, self.tag);
+    NSLog(@"Frame| X: %.0f - Y: %.0f - W: %.0f - H: %.0f", self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
+    NSLog(@"Layer Frame| X: %.0f - Y: %.0f - W: %.0f - H: %.0f", self.layer.frame.origin.x, self.layer.frame.origin.y, self.layer.frame.size.width, self.layer.frame.size.height);
+    NSLog(@"Cur-Position| X: %f - Y: %f", self.currentPhysicsPosition.x, self.currentPhysicsPosition.y);
 }
 
 @end

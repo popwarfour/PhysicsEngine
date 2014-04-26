@@ -19,10 +19,12 @@
         self.physicObjects = physicsObjects;
         self.updateInterval = updateInteral;
         
+        [self updateCurrentPhysicsObjectsGameLandscapeReference];
+        
         self.objectsToAdd = [[NSMutableArray alloc] init];
         self.objectsToRemove = [[NSMutableArray alloc] init];
         
-        [self setBackgroundColor:[UIColor greenColor]];
+        [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
 }
@@ -30,6 +32,16 @@
 -(void)drawRect:(CGRect)rect
 {
     [self addInitialObjectsToView];
+}
+
+#pragma mark - Utility Methods
+#pragma mark Update Initial Phyics Objects Game Landscape Property
+-(void)updateCurrentPhysicsObjectsGameLandscapeReference
+{
+    for(PhysicsObject *object in self.physicObjects)
+    {
+        object.landscape = self;
+    }
 }
 
 #pragma mark - Added & Removing Physics Objects

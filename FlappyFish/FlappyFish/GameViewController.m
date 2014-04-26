@@ -11,7 +11,7 @@
 #define GAME_STATE_STARTED 0
 #define GAME_STATE_ENDED 1
 
-#define WALLS_WIDTH 450
+#define WALLS_WIDTH 200
 #define WALLS_MIN_HEIGHT 40
 
 
@@ -31,8 +31,6 @@
     if (self)
     {
         // Custom initialization
-        
-        NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
     }
     return self;
 }
@@ -53,12 +51,12 @@
     [self.gameOverLabel  setFont:[self.gameOverLabel.font fontWithSize:40]];
     [self.gameOverLabel  setText:@"Tap To Start"];
     
-    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width / 2, 30)];
+    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.frame.size.width / 2, 30)];
     [self.scoreLabel setFont:[self.scoreLabel.font fontWithSize:30]];
     [self.scoreLabel setTextAlignment:NSTextAlignmentCenter];
     [self.scoreLabel setText:@"0"];
     
-    self.topScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2, 20, self.view.frame.size.width / 2, 30)];
+    self.topScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2, 25, self.view.frame.size.width / 2, 30)];
     [self.topScoreLabel setFont:[self.topScoreLabel.font fontWithSize:30]];
     [self.topScoreLabel setTextAlignment:NSTextAlignmentCenter];
     [self.topScoreLabel setText:@"0"];
@@ -66,9 +64,8 @@
     [self.upButton setBackgroundColor:[UIColor clearColor]];
     [self.upButton setBackgroundImage:[UIImage new] forState:UIControlStateHighlighted];
     [self.upButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-    
-    CGRect curFrame = self.view.frame;
-    self.gameView = [[PhysicsLandscape alloc] initWithFrame:curFrame andPhysicsObjects:[self createFishAndWalls] andUpdateInterval:1.0/60.0];
+
+    self.gameView = [[PhysicsLandscape alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height) andPhysicsObjects:[self createFishAndWalls] andUpdateInterval:1.0/60.0];
     [self.gameView setPhysicsLandscapeDelegate:self];
     [self.gameView setShouldShowFrameRate:TRUE];
     [self.view addSubview:self.gameView];
@@ -80,65 +77,11 @@
     [self.view addSubview:self.gameOverLabel];
     [self.view addSubview:self.scoreLabel];
     [self.view addSubview:self.topScoreLabel];
-    NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    //[self startGame];
-    NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    
-    /*
-    [self.view setBackgroundColor:[UIColor lightGrayColor]];
-    
-    UIButton *temp = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 20, 20)];
-    [temp addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    temp.tag = 0;
-    [temp setBackgroundColor:[UIColor redColor]];
-    
-    UIButton *temp1 = [[UIButton alloc] initWithFrame:CGRectMake(568 - 20, 20, 20, 20)];
-    [temp1 addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    temp1.tag = 1;
-    [temp1 setBackgroundColor:[UIColor greenColor]];
-    
-    UIButton *temp2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 320 - 20, 20, 20)];
-    [temp2 addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    temp2.tag = 2;
-    [temp2 setBackgroundColor:[UIColor blueColor]];
-    
-    UIButton *temp3 = [[UIButton alloc] initWithFrame:CGRectMake(568 - 20, 320 - 20, 20, 20)];
-    [temp3 addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    temp3.tag = 3;
-    [temp3 setBackgroundColor:[UIColor yellowColor]];
-    
-    [self.view addSubview:temp];
-    [self.view addSubview:temp1];
-    [self.view addSubview:temp2];
-    [self.view addSubview:temp3];*/
-}
 
--(void)buttonPressed:(UIButton *)sender
-{
-    NSLog(@"The %d button was pressed", sender.tag);
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    
-    [self.view setFrame:CGRectMake(0, 0, 568, 320)];
-    
-    NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-}
-
--(void)viewWillLayoutSubviews
-{
-    NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-}
-
--(void)viewDidLayoutSubviews
-{
-    NSLog(@"x: %f - y: %f - width: %f - height: %f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -168,7 +111,7 @@
     [objects addObject:top];
     
     
-    PhysicsObject *bottom = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 5, self.view.frame.size.width, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE andLandscape:self.gameView];
+    PhysicsObject *bottom = [[PhysicsObject alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - (5 + 20), self.view.frame.size.width, 5) initialForces:@[] andImage:nil withImageFrame:CGRectZero andDoesAnimateChanges:FALSE andLandscape:self.gameView];
     bottom.objectTag = @"bottom";
     [objects addObject:bottom];
     
@@ -323,8 +266,6 @@
     NSDictionary *rightWallData = [walls firstObject];
     PhysicsObject *rightMostWall = [rightWallData objectForKey:@"object"];
     
-    NSLog(@"Distance: %f", self.gameView.frame.size.width - rightMostWall.currentPhysicsPosition.x);
-    NSLog(@"IS %f GREAT or EQUAL TO %d && WALL COUNT > %d", self.gameView.frame.size.width - rightMostWall.currentPhysicsPosition.x, WALLS_WIDTH, walls.count);
     if(self.gameView.frame.size.width - rightMostWall.currentPhysicsPosition.x >= WALLS_WIDTH && walls.count > 0)
     {
         [self addNewMovingWalls];
@@ -389,11 +330,6 @@
         }
     }
     
-    NSLog(@"WIDHT: %f - HIEHGT: %f", self.view.frame.size.width, self.view.frame.size.height);
-    NSLog(@"WIDHT: %f - HIEHGT: %f", self.view.window.frame.size.width, self.view.window.frame.size.height);
-    
-
-    
     //Reset Fish
     int startX = self.gameView.frame.size.width/3;
     int startY = self.gameView.frame.size.height/2;
@@ -423,10 +359,6 @@
 
 -(void)gameOver
 {
-    NSLog(@"WIDHT: %f - HIEHGT: %f", self.view.frame.size.width, self.view.frame.size.height);
-    NSLog(@"WIDHT: %f - HIEHGT: %f", self.view.window.frame.size.width, self.view.window.frame.size.height);
-    
-    
     self.gameState = GAME_STATE_ENDED;
     
     [self.gameView setShouldUpdate:FALSE];
@@ -435,7 +367,7 @@
     
     [self.createNewWallTimer invalidate];
     
-    [self.gameOverLabel setText:@"Game Over!"];
+    [self.gameOverLabel setText:@"Game Over - Tap To Replay"];
     
     [self.view addSubview:self.gameOverLabel];
 }
