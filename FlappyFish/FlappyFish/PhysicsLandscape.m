@@ -22,7 +22,7 @@
         self.objectsToAdd = [[NSMutableArray alloc] init];
         self.objectsToRemove = [[NSMutableArray alloc] init];
         
-        [self setBackgroundColor:[UIColor whiteColor]];
+        [self setBackgroundColor:[UIColor greenColor]];
     }
     return self;
 }

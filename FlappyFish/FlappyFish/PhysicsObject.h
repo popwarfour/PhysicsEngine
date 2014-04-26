@@ -13,9 +13,12 @@
 #import "PhysicsVector.h"
 #import "PhysicsObjectPosition.h"
 
+@class PhysicsLandscape;
+
 @interface PhysicsObject : UIView
 
 @property PhysicsVector *velocity;
+@property PhysicsLandscape *landscape;
 @property (nonatomic, strong) NSMutableArray *forces;
 @property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, strong) NSString *objectTag;
@@ -24,7 +27,7 @@
 @property BOOL doesAnimateChanges;
 
 
-- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges;
+- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges andLandscape:(PhysicsLandscape *)landscape;
 
 -(void)updatePosition:(float)frequency;
 

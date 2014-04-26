@@ -16,7 +16,7 @@
     
     //MenuViewController *menu = [[MenuViewController alloc] initWithNibName:@"MenuView" bundle:nil];
     
-    GameViewController *gameVC = [[GameViewController alloc] initWithNibName:@"GameView" bundle:nil];
+    GameViewController *gameVC = [[GameViewController alloc] initWithNibName:nil bundle:nil];
     //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:menu];
     //[nav setNavigationBarHidden:TRUE];
 

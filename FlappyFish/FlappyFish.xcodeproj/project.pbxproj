@@ -32,6 +32,12 @@
 		DFC0DD0D18CE4D2700EA1C71 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */; };
 		DFC0DD0F18CE4E6200EA1C71 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFC0DD0E18CE4E6200EA1C71 /* GameView.xib */; };
 		DFC0DD1118CE6BE200EA1C71 /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFC0DD1018CE6BE200EA1C71 /* MenuView.xib */; };
+		DFF5336518DA4C8500425D26 /* morganFreeman.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF5336318DA4C8500425D26 /* morganFreeman.png */; };
+		DFF5336618DA4C8500425D26 /* morganFreeman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF5336418DA4C8500425D26 /* morganFreeman@2x.png */; };
+		DFF5336918DA548800425D26 /* morganFreemanSmile.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF5336718DA548800425D26 /* morganFreemanSmile.png */; };
+		DFF5336A18DA548800425D26 /* morganFreemanSmile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF5336818DA548800425D26 /* morganFreemanSmile@2x.png */; };
+		DFF5336D18DA55C200425D26 /* morganFreemanSad.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF5336B18DA55C200425D26 /* morganFreemanSad.png */; };
+		DFF5336E18DA55C200425D26 /* morganFreemanSad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFF5336C18DA55C200425D26 /* morganFreemanSad@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +88,12 @@
 		DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		DFC0DD0E18CE4E6200EA1C71 /* GameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
 		DFC0DD1018CE6BE200EA1C71 /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
+		DFF5336318DA4C8500425D26 /* morganFreeman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = morganFreeman.png; path = images/morganFreeman.png; sourceTree = SOURCE_ROOT; };
+		DFF5336418DA4C8500425D26 /* morganFreeman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "morganFreeman@2x.png"; path = "images/morganFreeman@2x.png"; sourceTree = SOURCE_ROOT; };
+		DFF5336718DA548800425D26 /* morganFreemanSmile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = morganFreemanSmile.png; path = images/morganFreemanSmile.png; sourceTree = SOURCE_ROOT; };
+		DFF5336818DA548800425D26 /* morganFreemanSmile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "morganFreemanSmile@2x.png"; path = "images/morganFreemanSmile@2x.png"; sourceTree = SOURCE_ROOT; };
+		DFF5336B18DA55C200425D26 /* morganFreemanSad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = morganFreemanSad.png; path = images/morganFreemanSad.png; sourceTree = SOURCE_ROOT; };
+		DFF5336C18DA55C200425D26 /* morganFreemanSad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "morganFreemanSad@2x.png"; path = "images/morganFreemanSad@2x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +219,12 @@
 		DF36914218CE71A100E215CF /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DFF5336B18DA55C200425D26 /* morganFreemanSad.png */,
+				DFF5336C18DA55C200425D26 /* morganFreemanSad@2x.png */,
+				DFF5336718DA548800425D26 /* morganFreemanSmile.png */,
+				DFF5336818DA548800425D26 /* morganFreemanSmile@2x.png */,
+				DFF5336318DA4C8500425D26 /* morganFreeman.png */,
+				DFF5336418DA4C8500425D26 /* morganFreeman@2x.png */,
 				DF36914B18CFBAB400E215CF /* test.png */,
 				DF36914718CE860400E215CF /* fishSmall.png */,
 			);
@@ -308,11 +326,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFF5336A18DA548800425D26 /* morganFreemanSmile@2x.png in Resources */,
 				DF1C5CC118CCCB9F00943597 /* InfoPlist.strings in Resources */,
+				DFF5336518DA4C8500425D26 /* morganFreeman.png in Resources */,
+				DFF5336918DA548800425D26 /* morganFreemanSmile.png in Resources */,
 				DFC0DD1118CE6BE200EA1C71 /* MenuView.xib in Resources */,
+				DFF5336618DA4C8500425D26 /* morganFreeman@2x.png in Resources */,
+				DFF5336E18DA55C200425D26 /* morganFreemanSad@2x.png in Resources */,
 				DF1C5CC918CCCB9F00943597 /* Images.xcassets in Resources */,
 				DFC0DD0F18CE4E6200EA1C71 /* GameView.xib in Resources */,
 				DF36914818CE860400E215CF /* fishSmall.png in Resources */,
+				DFF5336D18DA55C200425D26 /* morganFreemanSad.png in Resources */,
 				DF36914C18CFBAB400E215CF /* test.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

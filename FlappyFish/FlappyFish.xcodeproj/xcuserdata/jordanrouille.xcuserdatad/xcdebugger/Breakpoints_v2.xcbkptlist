@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416935078.303453"
+            timestampString = "420226748.449275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "-updateVelocity"
             landmarkType = "5">
             <Locations>
@@ -66,11 +66,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416935078.303453"
+            timestampString = "420226748.449275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "-updateVelocity"
             landmarkType = "5">
          </BreakpointContent>
@@ -98,7 +98,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsLandscape.m"
-            timestampString = "416499368.927601"
+            timestampString = "420143256.192898"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
@@ -114,11 +114,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/GameViewController.m"
-            timestampString = "416953564.592439"
+            timestampString = "420226810.676464"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "-startGame"
             landmarkType = "5">
          </BreakpointContent>
@@ -130,7 +130,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/PhysicsLandscape.m"
-            timestampString = "416953924.245812"
+            timestampString = "420143256.192898"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
@@ -146,11 +146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/GameViewController.m"
-            timestampString = "416953564.592439"
+            timestampString = "420226810.676464"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "-checkForGameOverCollisionWithObject1:andObject2:"
             landmarkType = "5">
          </BreakpointContent>
@@ -162,11 +162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlappyFish/GameViewController.m"
-            timestampString = "416953564.592439"
+            timestampString = "420226810.676464"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
             landmarkName = "-startGame"
             landmarkType = "5">
          </BreakpointContent>
@@ -174,32 +174,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416940316.789362"
+            filePath = "FlappyFish/GameViewController.m"
+            timestampString = "420225987.425046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
-            landmarkName = "-renderNewPosition:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FlappyFish/PhysicsObject.m"
-            timestampString = "416940316.789362"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "-renderNewPosition:"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "-landscapeDidUpdateForPhysicsLandscape:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

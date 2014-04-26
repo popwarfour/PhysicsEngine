@@ -7,10 +7,11 @@
 //
 
 #import "PhysicsObject.h"
+#import "PhysicsLandscape.h"
 
 @implementation PhysicsObject
 
-- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges
+- (id)initWithFrame:(CGRect)frame initialForces:(id)initialForces andImage:(UIImage *)image withImageFrame:(CGRect)imageFrame andDoesAnimateChanges:(BOOL)animateChanges andLandscape:(PhysicsLandscape *)landscape
 {
     self = [super initWithFrame:frame];
     if (self)
@@ -42,6 +43,8 @@
         {
             NSAssert(FALSE, @"Invalid type of object as initial forces. Must be of type NSArray or NSMutableArray");
         }
+        
+        self.landscape = landscape;
         
         self.currentPhysicsPosition = [[PhysicsObjectPosition alloc] initWithX:self.layer.position.x andY:self.layer.position.y];
         
@@ -135,8 +138,12 @@
 -(void)renderNewPosition:(float)interval
 {
     //Render & Update Position Only If We're On The Screen!
-    if([self shouldUpdateWithNewPosition:self.updatedPhysicsPosition])
+    if([self shouldRenderWithNewPosition:self.updatedPhysicsPosition])
     {
+        if([self.objectTag isEqualToString:@"topWall"])
+        {
+            NSLog(@"CHECK");
+        }
         //Render & Update We're On the Screen!
         CGPoint roundedNewPosition;
         if(self.updatedPhysicsPosition != nil)
@@ -173,17 +180,17 @@
     }
 }
 
--(BOOL)shouldUpdateWithNewPosition:(PhysicsObjectPosition *)newPosition
+-(BOOL)shouldRenderWithNewPosition:(PhysicsObjectPosition *)newPosition
 {
     PhysicsObjectPosition *currentPosition = self.currentPhysicsPosition;
     
     BOOL newPositionOutside = FALSE;
     BOOL oldPositionOutside = FALSE;
-    if((newPosition.x + (self.frame.size.width / 2)) < 0 || newPosition.y + (self.frame.size.height / 2) < 0 || newPosition.y - (self.frame.size.height / 2) > 568 || newPosition.x - (self.frame.size.width / 2) > 320)
+    if((newPosition.x + (self.frame.size.width / 2)) < 0 || newPosition.y + (self.frame.size.height / 2) < 0 || newPosition.y - (self.frame.size.height / 2) > self.landscape.frame.size.height || newPosition.x - (self.frame.size.width / 2) > self.landscape.frame.size.width)
     {
         newPositionOutside = TRUE;
     }
-    if((currentPosition.x + (self.frame.size.width / 2)) < 0 || currentPosition.y -+ (self.frame.size.height / 2) < 0 || currentPosition.y - (self.frame.size.height / 2) > 568 || currentPosition.x - (self.frame.size.width / 2) > 320)
+    if((currentPosition.x + (self.frame.size.width / 2)) < 0 || currentPosition.y -+ (self.frame.size.height / 2) < 0 || currentPosition.y - (self.frame.size.height / 2) > self.landscape.frame.size.height || currentPosition.x - (self.frame.size.width / 2) > self.landscape.frame.size.width)
     {
         oldPositionOutside = TRUE;
     }
