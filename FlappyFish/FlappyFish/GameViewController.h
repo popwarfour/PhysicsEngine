@@ -28,6 +28,7 @@
 @property int topScore;
 @property int extraLives;
 
+-(void)startGame;
 - (IBAction)backgroundButtonPressed:(id)sender;
 
 @end

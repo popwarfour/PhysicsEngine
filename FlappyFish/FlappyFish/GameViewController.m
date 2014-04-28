@@ -369,6 +369,8 @@
     
     [self.gameOverLabel setText:@"Game Over - Tap To Replay"];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"gameOver" object:nil];
+    
     [self.view addSubview:self.gameOverLabel];
 }
 
