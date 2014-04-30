@@ -16,6 +16,8 @@
 @property (nonatomic, strong) PhysicsObject *fish;
 @property (weak, nonatomic) IBOutlet UIButton *upButton;
 
+@property (nonatomic, strong) PhysicsObject *nearestTopWall;
+
 @property (nonatomic, strong) UILabel *gameOverLabel;
 @property (nonatomic, strong) UILabel *scoreLabel;
 @property (nonatomic, strong) UILabel *topScoreLabel;
@@ -27,8 +29,12 @@
 @property int currentScore;
 @property int topScore;
 @property int extraLives;
+@property float fitness;
+
+@property int wallGap;
 
 -(void)startGame;
 - (IBAction)backgroundButtonPressed:(id)sender;
+-(NSDictionary *)getInformation;
 
 @end

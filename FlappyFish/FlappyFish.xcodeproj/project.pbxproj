@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF076426190E9D37001B7456 /* EvolutionController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF076425190E9D37001B7456 /* EvolutionController.m */; };
+		DF07642A190E9E57001B7456 /* EvoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF076429190E9E57001B7456 /* EvoView.xib */; };
 		DF1C5CB718CCCB9F00943597 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CB618CCCB9F00943597 /* Foundation.framework */; };
 		DF1C5CB918CCCB9F00943597 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CB818CCCB9F00943597 /* CoreGraphics.framework */; };
 		DF1C5CBB18CCCB9F00943597 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1C5CBA18CCCB9F00943597 /* UIKit.framework */; };
@@ -27,6 +29,7 @@
 		DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */; };
 		DF36914818CE860400E215CF /* fishSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = DF36914718CE860400E215CF /* fishSmall.png */; };
 		DF36914C18CFBAB400E215CF /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = DF36914B18CFBAB400E215CF /* test.png */; };
+		DF45395F191038BB00E07592 /* ArffFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF45395E191038BB00E07592 /* ArffFormatter.m */; };
 		DFC0DD0718CE4B6000EA1C71 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */; };
 		DFC0DD0A18CE4B9B00EA1C71 /* PhysicsLandscape.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0918CE4B9B00EA1C71 /* PhysicsLandscape.m */; };
 		DFC0DD0D18CE4D2700EA1C71 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC0DD0C18CE4D2700EA1C71 /* GameViewController.m */; };
@@ -51,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF076424190E9D37001B7456 /* EvolutionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvolutionController.h; sourceTree = "<group>"; };
+		DF076425190E9D37001B7456 /* EvolutionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvolutionController.m; sourceTree = "<group>"; };
+		DF076429190E9E57001B7456 /* EvoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EvoView.xib; sourceTree = "<group>"; };
 		DF1C5CB318CCCB9F00943597 /* FlappyFish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyFish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF1C5CB618CCCB9F00943597 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF1C5CB818CCCB9F00943597 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -80,6 +86,8 @@
 		DF1C5CFF18CE28C500943597 /* PhysicsObjectPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsObjectPosition.m; sourceTree = "<group>"; };
 		DF36914718CE860400E215CF /* fishSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fishSmall.png; path = images/fishSmall.png; sourceTree = SOURCE_ROOT; };
 		DF36914B18CFBAB400E215CF /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = images/test.png; sourceTree = SOURCE_ROOT; };
+		DF45395D191038BB00E07592 /* ArffFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArffFormatter.h; sourceTree = "<group>"; };
+		DF45395E191038BB00E07592 /* ArffFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArffFormatter.m; sourceTree = "<group>"; };
 		DFC0DD0518CE4B6000EA1C71 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		DFC0DD0618CE4B6000EA1C71 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		DFC0DD0818CE4B9B00EA1C71 /* PhysicsLandscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsLandscape.h; sourceTree = "<group>"; };
@@ -122,6 +130,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF07641C190E99DF001B7456 /* Neural Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DF076424190E9D37001B7456 /* EvolutionController.h */,
+				DF076425190E9D37001B7456 /* EvolutionController.m */,
+				DF076429190E9E57001B7456 /* EvoView.xib */,
+				DF45395D191038BB00E07592 /* ArffFormatter.h */,
+				DF45395E191038BB00E07592 /* ArffFormatter.m */,
+			);
+			name = "Neural Controller";
+			sourceTree = "<group>";
+		};
 		DF1C5CAA18CCCB9F00943597 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +180,7 @@
 				DF36914218CE71A100E215CF /* Images */,
 				DFC0DD0318CE4B3C00EA1C71 /* Menu View Controller */,
 				DFC0DD0418CE4B4B00EA1C71 /* Game View Controller */,
+				DF07641C190E99DF001B7456 /* Neural Controller */,
 				DF1C5CF218CCEBA900943597 /* PhysicsEngine */,
 				DF1C5CC518CCCB9F00943597 /* AppDelegate.h */,
 				DF1C5CC618CCCB9F00943597 /* AppDelegate.m */,
@@ -331,6 +352,7 @@
 				DFF5336518DA4C8500425D26 /* morganFreeman.png in Resources */,
 				DFF5336918DA548800425D26 /* morganFreemanSmile.png in Resources */,
 				DFC0DD1118CE6BE200EA1C71 /* MenuView.xib in Resources */,
+				DF07642A190E9E57001B7456 /* EvoView.xib in Resources */,
 				DFF5336618DA4C8500425D26 /* morganFreeman@2x.png in Resources */,
 				DFF5336E18DA55C200425D26 /* morganFreemanSad@2x.png in Resources */,
 				DF1C5CC918CCCB9F00943597 /* Images.xcassets in Resources */,
@@ -358,6 +380,7 @@
 			files = (
 				DFC0DD0D18CE4D2700EA1C71 /* GameViewController.m in Sources */,
 				DF1C5CFB18CE25D400943597 /* PhysicsVector.m in Sources */,
+				DF45395F191038BB00E07592 /* ArffFormatter.m in Sources */,
 				DF1C5CEA18CCD03900943597 /* PhysicsObject.m in Sources */,
 				DF1C5D0018CE28C500943597 /* PhysicsObjectPosition.m in Sources */,
 				DFC0DD0A18CE4B9B00EA1C71 /* PhysicsLandscape.m in Sources */,
@@ -365,6 +388,7 @@
 				DF1C5CC718CCCB9F00943597 /* AppDelegate.m in Sources */,
 				DF1C5CF518CCF29C00943597 /* PhysicsForce.m in Sources */,
 				DF1C5CC318CCCB9F00943597 /* main.m in Sources */,
+				DF076426190E9D37001B7456 /* EvolutionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

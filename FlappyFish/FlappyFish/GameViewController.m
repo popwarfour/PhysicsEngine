@@ -45,6 +45,9 @@
     self.WALLS_VELOCITY = (-1.0 * (120.0/60.0));
     self.CONTINUOUS_FORCE = -1;
     
+    //Default Wall Gap
+    self.wallGap = 100;
+    
     //Buttons & Labels
     self.gameOverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height / 2) - 50, self.view.frame.size.width, 100)];
     [self.gameOverLabel setTextAlignment:NSTextAlignmentCenter];
@@ -246,6 +249,19 @@
             [self didLevelUp];
         }
     }
+    
+    for(PhysicsObject *object in physicsObjects)
+    {
+        if([object.objectTag isEqualToString:@"topWall"])
+        {
+            if(object.tag == self.currentScore + 1)
+            {
+                self.nearestTopWall = object;
+            }
+        }
+    }
+    
+    [self updateEvolution];
 }
 
 #pragma mark - Game Methods
@@ -318,6 +334,7 @@
     self.previousScoreTag = 1;
     self.currentScore = 0;
     self.extraLives = 0;
+    self.fitness = 0;
     
     [self updateScoreLabel];
     
@@ -367,11 +384,11 @@
     
     [self.createNewWallTimer invalidate];
     
-    [self.gameOverLabel setText:@"Game Over - Tap To Replay"];
+    //[self.gameOverLabel setText:@"Game Over - Tap To Replay"];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"gameOver" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"gameDidEnd" object:nil];
     
-    [self.view addSubview:self.gameOverLabel];
+    //[self.view addSubview:self.gameOverLabel];
 }
 
 
@@ -450,7 +467,7 @@
 
 -(NSArray *)generateNewMovingWalls
 {
-    int randGapHeight = 100;//(arc4random() % 50) + 80;
+    int randGapHeight = self.wallGap;
     int randTopHeight = (arc4random() % ((int)self.gameView.frame.size.height - ((2 * WALLS_MIN_HEIGHT) + randGapHeight))) + WALLS_MIN_HEIGHT;
     int bottomHeight = (int)self.gameView.frame.size.height - (randGapHeight + randTopHeight);
     
@@ -468,6 +485,33 @@
     [bottomWall setBackgroundColor:[UIColor grayColor]];
     
     return @[topWall, bottomWall];
+}
+
+#pragma mark - Evolution Methods
+-(void)updateEvolution
+{
+    NSDictionary *data = [self getInformation];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"checkEvolution" object:data userInfo:nil];
+    
+    self.fitness++;
+    
+    //[self.scoreLabel setText:[NSString stringWithFormat:@"%.0f", self.fitness]];
+}
+
+-(NSDictionary *)getInformation
+{
+    NSNumber *morganY = [NSNumber numberWithInt:self.fish.frame.origin.y];
+    NSNumber *morganX = [NSNumber numberWithInt:self.fish.frame.origin.x];
+    NSNumber *morganHeight = [NSNumber numberWithInt:self.fish.frame.size.height];
+    NSNumber *wallY = [NSNumber numberWithInt:self.nearestTopWall.frame.origin.y];
+    NSNumber *wallX = [NSNumber numberWithInt:self.nearestTopWall.frame.origin.x];
+    NSNumber *wallHeight = [NSNumber numberWithInt:self.nearestTopWall.frame.size.height];
+    NSNumber *wallWidth = [NSNumber numberWithInt:self.nearestTopWall.frame.size.width];
+    
+    NSArray *keys = [[NSArray alloc] initWithObjects:@"morganY", @"morganX", @"wallX", @"wallY", @"wallHeight", @"morganHeight", @"wallWidth", nil];
+    NSArray *objects = [[NSArray alloc] initWithObjects:morganY, morganX, wallX, wallY, wallHeight, morganHeight, wallWidth, nil];
+    
+    return [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
 }
 
 #pragma mark - Supported Orientations

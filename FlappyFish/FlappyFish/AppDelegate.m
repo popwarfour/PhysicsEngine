@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "EvolutionController.h"
 
 @implementation AppDelegate
 
@@ -17,10 +18,12 @@
     //MenuViewController *menu = [[MenuViewController alloc] initWithNibName:@"MenuView" bundle:nil];
     
     GameViewController *gameVC = [[GameViewController alloc] initWithNibName:nil bundle:nil];
+    EvolutionController *evolutionVC = [[EvolutionController alloc] initWithNibName:@"EvoView" bundle:nil andGameViewController:gameVC];
+    
     //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:menu];
     //[nav setNavigationBarHidden:TRUE];
 
-    [self.window setRootViewController:gameVC];
+    [self.window setRootViewController:evolutionVC];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
