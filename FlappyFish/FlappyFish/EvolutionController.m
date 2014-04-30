@@ -141,7 +141,6 @@
     [self.gameVC setWallGap:self.currentGapHeight];
     //[self.gameVC setTopScore:s];
     
-    [self perterbModel];
     [self.gameVC startGame];
 }
 
@@ -207,8 +206,9 @@
     else
     {
         //Testing "Mined Rules"
-        pressUp = [self runRulesFor6GameTest1WithData:data];
-        //[self runRulesFor6GameTest2];
+        //pressUp = [self runRulesFor6GameTest1WithData:data];
+        //pressUp = [self runRulesFor6GameTest2WithData:data];
+        pressUp = [self runRulesFor6GameTest3WithData:data];
     }
     
     
@@ -231,6 +231,9 @@
         [self.rules addObject:newData];
     }
 }
+
+#pragma mark - Mined Models
+#pragma mark Testing Set 1 With 18500 Examples
 
 -(BOOL)runRulesFor6GameTest1WithData:(NSDictionary *)data
 {
@@ -341,16 +344,303 @@
     return pressUp;
 }
 
--(void)runRulesFor6GameTest2
+-(BOOL)runRulesFor6GameTest2WithData:(NSDictionary *)data
 {
+    NSNumber *morganY = [data objectForKey:@"morganY"];
+    NSNumber *morganX = [data objectForKey:@"morganX"];
+    NSNumber *morganHeight = [data objectForKey:@"morganHeight"];
+    NSNumber *wallX = [data objectForKey:@"wallX"];
+    NSNumber *wallY = [data objectForKey:@"wallY"];
+    NSNumber *wallWidth = [data objectForKey:@"wallWidth"];
+    NSNumber *wallHeight = [data objectForKey:@"wallHeight"];
     
+    BOOL pressUp = FALSE;
+    
+    //6 Games - 18500 Examples - C=1.0E-8 M=2
+    if(morganY.intValue <= 230)
+    {
+        if(wallX.intValue <= 220)
+        {
+            //no jump
+        }
+        else
+        {
+            if(wallX.intValue <= 238)
+            {
+                if(wallX.intValue <= 228)
+                {
+                    if(morganY.intValue <= 116)
+                    {
+                        //no jump
+                    }
+                    else
+                    {
+                        if(wallHeight.intValue <= 131)
+                        {
+                            if(morganY.intValue <= 189)
+                            {
+                                if(wallHeight.intValue <= 61)
+                                {
+                                    pressUp = TRUE;
+                                }
+                                else
+                                {
+                                    if(morganY.intValue <= 147)
+                                    {
+                                        //no jump
+                                    }
+                                    else
+                                    {
+                                        if(morganY.intValue <= 173)
+                                        {
+                                            if(wallHeight.intValue <= 104)
+                                            {
+                                                pressUp = TRUE;
+                                            }
+                                            else
+                                            {
+                                                //no jump
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if(wallHeight.intValue <= 117)
+                                            {
+                                                pressUp = TRUE;
+                                            }
+                                            else
+                                            {
+                                                //no jump
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                pressUp = TRUE;
+                            }
+                        }
+                        else
+                        {
+                            //no jump
+                        }
+                    }
+                }
+                else
+                {
+                    if(wallHeight.intValue <= 137)
+                    {
+                        if(wallHeight.intValue <= 109)
+                        {
+                            pressUp = TRUE;
+                        }
+                        else
+                        {
+                            if(morganY.intValue <= 192)
+                            {
+                                //no jump
+                            }
+                            else
+                            {
+                                pressUp = TRUE;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(morganY.intValue <= 208)
+                        {
+                            //no jump
+                        }
+                        else
+                        {
+                            if(wallHeight.intValue <= 150)
+                            {
+                                pressUp = TRUE;
+                            }
+                            else
+                            {
+                                if(morganY.intValue <= 224)
+                                {
+                                    //no jump
+                                }
+                                else
+                                {
+                                    pressUp = TRUE;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //no jump
+            }
+        }
+    }
+    else
+    {
+        pressUp = TRUE;
+    }
+    
+    return pressUp;
 }
 
-#pragma mark - Neural Model Methods
--(void)perterbModel
+-(BOOL)runRulesFor6GameTest3WithData:(NSDictionary *)data
 {
+    NSNumber *morganY = [data objectForKey:@"morganY"];
+    NSNumber *morganX = [data objectForKey:@"morganX"];
+    NSNumber *morganHeight = [data objectForKey:@"morganHeight"];
+    NSNumber *wallX = [data objectForKey:@"wallX"];
+    NSNumber *wallY = [data objectForKey:@"wallY"];
+    NSNumber *wallWidth = [data objectForKey:@"wallWidth"];
+    NSNumber *wallHeight = [data objectForKey:@"wallHeight"];
     
+    BOOL pressUp = FALSE;
+    
+    //6 Games - 18500 Examples - C=1.0E-8 M=1
+    if(morganY.intValue <= 230)
+    {
+        if(wallX.intValue <= 220)
+        {
+            //no jump
+        }
+        else
+        {
+            if(wallX.intValue <= 238)
+            {
+                if(wallX.intValue <= 228)
+                {
+                    if(morganY.intValue <= 116)
+                    {
+                        //no jump
+                    }
+                    else
+                    {
+                        if(wallHeight.intValue <= 131)
+                        {
+                            if(morganY.intValue <= 189)
+                            {
+                                if(wallHeight.intValue <= 61)
+                                {
+                                    pressUp = TRUE;
+                                }
+                                else
+                                {
+                                    if(morganY.intValue <= 147)
+                                    {
+                                        //no jump
+                                    }
+                                    else
+                                    {
+                                        if(morganY.intValue <= 173)
+                                        {
+                                            if(wallHeight.intValue <= 104)
+                                            {
+                                                pressUp = TRUE;
+                                            }
+                                            else
+                                            {
+                                                //no jump
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if(wallHeight.intValue <= 117)
+                                            {
+                                                pressUp = TRUE;
+                                            }
+                                            else
+                                            {
+                                                //no jump
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                pressUp = TRUE;
+                            }
+                        }
+                        else
+                        {
+                            //no jump
+                        }
+                    }
+                }
+                else
+                {
+                    if(wallHeight.intValue <= 137)
+                    {
+                        if(wallHeight.intValue <= 109)
+                        {
+                            pressUp = TRUE;
+                        }
+                        else
+                        {
+                            if(morganY.intValue <= 192)
+                            {
+                                //no jump
+                            }
+                            else
+                            {
+                                pressUp = TRUE;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(morganY.intValue <= 208)
+                        {
+                            //no jump
+                        }
+                        else
+                        {
+                            if(wallHeight.intValue <= 150)
+                            {
+                                if(morganY.intValue <= 209)
+                                {
+                                    pressUp = TRUE;
+                                }
+                                else
+                                {
+                                    pressUp = TRUE;
+                                }
+                            }
+                            else
+                            {
+                                if(morganY.intValue <= 224)
+                                {
+                                    //no jump
+                                }
+                                else
+                                {
+                                    pressUp = TRUE;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //no jump
+            }
+        }
+    }
+    else
+    {
+        pressUp = TRUE;
+    }
+    
+    return pressUp;
 }
+
+#pragma mark - Mined Models
+#pragma mark Testing Set 1 With 18500 Examples
 
 
 /*
