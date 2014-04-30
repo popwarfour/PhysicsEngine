@@ -94,6 +94,8 @@
         self.currentEnvolution++;
         
         NSLog(@"CURRENT EVOLUTION: %d", self.currentEnvolution);
+        
+        [self startNewGeneration];
     }
     else
     {
@@ -137,7 +139,7 @@
 -(void)startNewGeneration
 {
     [self.gameVC setWallGap:self.currentGapHeight];
-    [self.gameVC setTopScore:self.parentFitness];
+    //[self.gameVC setTopScore:s];
     
     [self perterbModel];
     [self.gameVC startGame];
@@ -153,6 +155,8 @@
 
 -(void)checkEvolutionWithData:(NSNotification *)notification
 {
+    BOOL training = FALSE;
+    
     NSDictionary *data = [notification object];
     NSNumber *morganY = [data objectForKey:@"morganY"];
     NSNumber *morganX = [data objectForKey:@"morganX"];
@@ -162,38 +166,52 @@
     NSNumber *wallWidth = [data objectForKey:@"wallWidth"];
     NSNumber *wallHeight = [data objectForKey:@"wallHeight"];
     
-    BOOL pressUp = false;
     
-    int morganBottom = (morganY.intValue + morganHeight.intValue);
+    BOOL pressUp = FALSE;
     
-    if(morganBottom > 270)
+    if(training)
     {
-        pressUp = true;
-    }
-    
-
-    int xDistance = (wallX.intValue - morganX.intValue);
-    int temp = (wallY.intValue + wallHeight.intValue + self.currentGapHeight);
-    int yDistance = (morganBottom - temp);
-    float ratio = (float)yDistance / (float)xDistance;
-    
-    if(yDistance < 0)
-        ratio = 0;
-    
-    if(ratio > 0.7 && ratio < 0.8)
-    {
-        pressUp = true;
-    }
-    
-    ;
-    ;
-    if((morganX.intValue > (wallX.intValue - wallWidth.intValue)) && (morganX.intValue < (wallX.intValue + (wallWidth.intValue * 2))))
-    {
-        if(morganBottom + 10 >= wallHeight.intValue + self.currentGapHeight)
+        //Training "Known Rules"
+        
+        int morganBottom = (morganY.intValue + morganHeight.intValue);
+        
+        if(morganBottom > 270)
         {
-            pressUp = true;
+            pressUp = TRUE;
+        }
+        
+        
+        int xDistance = (wallX.intValue - morganX.intValue);
+        int temp = (wallY.intValue + wallHeight.intValue + self.currentGapHeight);
+        int yDistance = (morganBottom - temp);
+        float ratio = (float)yDistance / (float)xDistance;
+        
+        if(yDistance < 0)
+            ratio = 0;
+        
+        if(ratio > 0.7 && ratio < 0.8)
+        {
+            pressUp = TRUE;
+        }
+        
+        ;
+        ;
+        if((morganX.intValue > (wallX.intValue - wallWidth.intValue)) && (morganX.intValue < (wallX.intValue + (wallWidth.intValue * 2))))
+        {
+            if(morganBottom + 10 >= wallHeight.intValue + self.currentGapHeight)
+            {
+                pressUp = TRUE;
+            }
         }
     }
+    else
+    {
+        //Testing "Mined Rules"
+        pressUp = [self runRulesFor6GameTest1WithData:data];
+        //[self runRulesFor6GameTest2];
+    }
+    
+    
     
     if(pressUp)
     {
@@ -212,6 +230,120 @@
         
         [self.rules addObject:newData];
     }
+}
+
+-(BOOL)runRulesFor6GameTest1WithData:(NSDictionary *)data
+{
+    NSNumber *morganY = [data objectForKey:@"morganY"];
+    NSNumber *morganX = [data objectForKey:@"morganX"];
+    NSNumber *morganHeight = [data objectForKey:@"morganHeight"];
+    NSNumber *wallX = [data objectForKey:@"wallX"];
+    NSNumber *wallY = [data objectForKey:@"wallY"];
+    NSNumber *wallWidth = [data objectForKey:@"wallWidth"];
+    NSNumber *wallHeight = [data objectForKey:@"wallHeight"];
+    
+    BOOL pressUp = FALSE;
+    
+    //6 Games - 18500 Examples - C=1.0E-6 M=2
+    if(morganY.intValue <= 230)
+    {
+        if(wallX.intValue <= 238)
+        {
+            if(wallX.intValue <= 228)
+            {
+                if(morganY.intValue <= 116)
+                {
+                    //no jump
+                }
+                else
+                {
+                    if(wallHeight.intValue <= 131)
+                    {
+                        if(morganY.intValue <= 189)
+                        {
+                            if(wallHeight.intValue <= 61)
+                            {
+                                pressUp = TRUE;
+                            }
+                            else
+                            {
+                                //no jump
+                            }
+                        }
+                        else
+                        {
+                            pressUp = TRUE;
+                        }
+                    }
+                    else
+                    {
+                        //no jump
+                    }
+                }
+            }
+            else
+            {
+                if(wallHeight.intValue <= 137)
+                {
+                    if(wallHeight.intValue <= 109)
+                    {
+                        pressUp = TRUE;
+                    }
+                    else
+                    {
+                        if(morganY.intValue <= 192)
+                        {
+                            //no jump
+                        }
+                        else
+                        {
+                            pressUp = TRUE;
+                        }
+                    }
+                }
+                else
+                {
+                    if(morganY.intValue <= 208)
+                    {
+                        //no jump
+                    }
+                    else
+                    {
+                        if(wallHeight.intValue <= 150)
+                        {
+                            pressUp = TRUE;
+                        }
+                        else
+                        {
+                            if(morganY.intValue <= 224)
+                            {
+                                //no jump
+                            }
+                            else
+                            {
+                                pressUp = TRUE;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            //no jump
+        }
+    }
+    else
+    {
+        pressUp = TRUE;
+    }
+    
+    return pressUp;
+}
+
+-(void)runRulesFor6GameTest2
+{
+    
 }
 
 #pragma mark - Neural Model Methods

@@ -68,7 +68,7 @@
     NSString *class = [data objectForKey:@"class"];
     
     
-    NSString *formattedLine = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%d,%d,%d,%@", morganHeight.intValue, morganWidth.intValue, morganY.intValue, morganX.intValue, wallHeight.intValue, wallWidth.intValue, wallX.intValue, wallY.intValue, class];
+    NSString *formattedLine = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%d,%d,%d,%@", morganHeight.intValue, morganWidth.intValue, morganX.intValue, morganY.intValue, wallHeight.intValue, wallWidth.intValue, wallX.intValue, wallY.intValue, class];
     
     [rulesString appendString:formattedLine];
     [rulesString appendString:@"\n"];
@@ -87,7 +87,7 @@
     NSNumber *wallY = [data objectForKey:@"wallY"];
     
     
-    NSString *formattedLine = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%d,%d,%d", morganHeight.intValue, morganWidth.intValue, morganY.intValue, morganX.intValue, wallHeight.intValue, wallWidth.intValue, wallX.intValue, wallY.intValue];
+    NSString *formattedLine = [NSString stringWithFormat:@"%d,%d,%d,%d,%d,%d,%d,%d", morganHeight.intValue, morganWidth.intValue, morganX.intValue, morganY.intValue, wallHeight.intValue, wallWidth.intValue, wallX.intValue, wallY.intValue];
     
     [rulesString appendString:formattedLine];
     [rulesString appendString:@"\n"];
