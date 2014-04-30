@@ -1,0 +1,16 @@
+C Val      | M Val --> Score
+_______________________________________
+
+Test Set #1 With 6 Games
+C = 1.0E-6 | M = 2 --> 2
+C = 1.0E-8 | M = 2 --> 4
+C = 1.0E-8 | M = 1 --> 7
+
+Test Set #1 With 10 Games
+C = 1.0E-6 | M = 2 --> 5
+C = 1.0E-8 | M = 2 --> 7 (same model)
+C = 1.0E-8 | M = 1 --> 7 (same model)
+
+Test Set #2 With 250k rules
+C = 1.0E-6 | M = 2 = 40
+
