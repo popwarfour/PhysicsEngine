@@ -1,0 +1,80 @@
+=== Run information ===
+
+Scheme:weka.classifiers.trees.J48 -C 6.0E-6 -M 2
+Relation:     handMadeRules
+Instances:    18497
+Attributes:   9
+              morganHeight
+              morganWidth
+              morganX
+              morganY
+              wallHeight
+              wallWidth
+              wallX
+              wallY
+              class
+Test mode:3-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+morganX <= 230
+|   wallX <= 238
+|   |   wallX <= 228
+|   |   |   morganX <= 116: noJump (2906.0/15.0)
+|   |   |   morganX > 116
+|   |   |   |   wallHeight <= 131
+|   |   |   |   |   morganX <= 189
+|   |   |   |   |   |   wallHeight <= 61: jump (46.0/5.0)
+|   |   |   |   |   |   wallHeight > 61: noJump (2266.0/154.0)
+|   |   |   |   |   morganX > 189: jump (82.0/4.0)
+|   |   |   |   wallHeight > 131: noJump (1737.0/78.0)
+|   |   wallX > 228
+|   |   |   wallHeight <= 137
+|   |   |   |   wallHeight <= 109: jump (437.0/39.0)
+|   |   |   |   wallHeight > 109
+|   |   |   |   |   morganX <= 192: noJump (49.0/8.0)
+|   |   |   |   |   morganX > 192: jump (125.0/1.0)
+|   |   |   wallHeight > 137
+|   |   |   |   morganX <= 208: noJump (88.0)
+|   |   |   |   morganX > 208
+|   |   |   |   |   wallHeight <= 150: jump (30.0/1.0)
+|   |   |   |   |   wallHeight > 150
+|   |   |   |   |   |   morganX <= 224: noJump (30.0)
+|   |   |   |   |   |   morganX > 224: jump (8.0/1.0)
+|   wallX > 238: noJump (10090.0/253.0)
+morganX > 230: jump (603.0)
+
+Number of Leaves  : 	14
+
+Size of the tree : 	27
+
+
+Time taken to build model: 8.68 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       17889               96.713  %
+Incorrectly Classified Instances       608                3.287  %
+Kappa statistic                          0.7903
+Mean absolute error                      0.0587
+Root mean squared error                  0.1752
+Relative absolute error                 33.5957 %
+Root relative squared error             59.3    %
+Total Number of Instances            18497     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.715     0.006      0.928     0.715     0.808      0.883    jump
+                 0.994     0.285      0.97      0.994     0.982      0.883    noJump
+Weighted Avg.    0.967     0.258      0.966     0.967     0.965      0.883
+
+=== Confusion Matrix ===
+
+     a     b   <-- classified as
+  1279   509 |     a = jump
+    99 16610 |     b = noJump

@@ -1,0 +1,99 @@
+=== Run information ===
+
+Scheme:weka.classifiers.trees.J48 -C 6.0E-8 -M 2
+Relation:     handMadeRules
+Instances:    41478
+Attributes:   9
+              morganHeight
+              morganWidth
+              morganX
+              morganY
+              wallHeight
+              wallWidth
+              wallX
+              wallY
+              class
+Test mode:3-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+morganX <= 230
+|   wallX <= 238
+|   |   wallX <= 228
+|   |   |   morganX <= 176
+|   |   |   |   wallHeight <= 110
+|   |   |   |   |   morganX <= 156: noJump (8863.0/256.0)
+|   |   |   |   |   morganX > 156
+|   |   |   |   |   |   wallHeight <= 95: jump (87.0/2.0)
+|   |   |   |   |   |   wallHeight > 95
+|   |   |   |   |   |   |   morganX <= 164: noJump (92.0/2.0)
+|   |   |   |   |   |   |   morganX > 164: jump (107.0/45.0)
+|   |   |   |   wallHeight > 110: noJump (4675.0/1.0)
+|   |   |   morganX > 176
+|   |   |   |   wallHeight <= 131
+|   |   |   |   |   wallHeight <= 113: jump (151.0)
+|   |   |   |   |   wallHeight > 113
+|   |   |   |   |   |   morganX <= 192
+|   |   |   |   |   |   |   wallHeight <= 122
+|   |   |   |   |   |   |   |   morganX <= 183: noJump (49.0/9.0)
+|   |   |   |   |   |   |   |   morganX > 183: jump (43.0/3.0)
+|   |   |   |   |   |   |   wallHeight > 122: noJump (183.0/17.0)
+|   |   |   |   |   |   morganX > 192: jump (107.0/3.0)
+|   |   |   |   wallHeight > 131: noJump (1571.0/201.0)
+|   |   wallX > 228
+|   |   |   wallHeight <= 126
+|   |   |   |   morganX <= 188
+|   |   |   |   |   wallHeight <= 104: jump (805.0/74.0)
+|   |   |   |   |   wallHeight > 104
+|   |   |   |   |   |   wallHeight <= 118
+|   |   |   |   |   |   |   morganX <= 170: noJump (15.0)
+|   |   |   |   |   |   |   morganX > 170: jump (39.0/12.0)
+|   |   |   |   |   |   wallHeight > 118
+|   |   |   |   |   |   |   morganX <= 186: noJump (37.0)
+|   |   |   |   |   |   |   morganX > 186: jump (5.0/2.0)
+|   |   |   |   morganX > 188: jump (394.0)
+|   |   |   wallHeight > 126
+|   |   |   |   morganX <= 206: noJump (294.0/22.0)
+|   |   |   |   morganX > 206
+|   |   |   |   |   wallHeight <= 150: jump (107.0/5.0)
+|   |   |   |   |   wallHeight > 150
+|   |   |   |   |   |   morganX <= 224: noJump (45.0/3.0)
+|   |   |   |   |   |   morganX > 224: jump (13.0/3.0)
+|   wallX > 238: noJump (22458.0/559.0)
+morganX > 230: jump (1338.0)
+
+Number of Leaves  : 	23
+
+Size of the tree : 	45
+
+
+Time taken to build model: 32.94 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       40131               96.7525 %
+Incorrectly Classified Instances      1347                3.2475 %
+Kappa statistic                          0.7972
+Mean absolute error                      0.0595
+Root mean squared error                  0.174 
+Relative absolute error                 33.2539 %
+Root relative squared error             58.1859 %
+Total Number of Instances            41478     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.719     0.005      0.94      0.719     0.815      0.893    jump
+                 0.995     0.281      0.97      0.995     0.982      0.893    noJump
+Weighted Avg.    0.968     0.254      0.967     0.968     0.966      0.893
+
+=== Confusion Matrix ===
+
+     a     b   <-- classified as
+  2960  1157 |     a = jump
+   190 37171 |     b = noJump
+

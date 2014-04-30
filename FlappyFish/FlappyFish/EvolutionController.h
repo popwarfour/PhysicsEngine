@@ -10,7 +10,7 @@
 #import "GameViewController.h"
 #import "ArffFormatter.h"
 
-#define NUM_EVOLUTIONS_PER_EPIC 2
+#define NUM_EVOLUTIONS_PER_EPIC 9
 
 #define DELTA_GAP_HEIGHT 0
 #define MIN_GAP_HEIGHT 115

@@ -85,14 +85,15 @@
     if(self.gameVC.fitness > self.parentFitness)
         self.parentFitness = self.gameVC.fitness;
     
-    //Remove last rule because it got us killed!
-    [self.rules removeObjectAtIndex:0];
+    //Remove last couple rules because they got us killed!
+    for(int i = 0; i < 10; i++)
+        [self.rules removeLastObject];
     
     if(self.currentEnvolution < NUM_EVOLUTIONS_PER_EPIC)
     {
         self.currentEnvolution++;
         
-        NSLog(@"URRENT EVOLUTION: %d", self.currentEnvolution);
+        NSLog(@"CURRENT EVOLUTION: %d", self.currentEnvolution);
     }
     else
     {
