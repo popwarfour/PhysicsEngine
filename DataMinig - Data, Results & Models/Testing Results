@@ -1,6 +1,11 @@
 C Val      | M Val --> Score
 _______________________________________
 
+All Testing Data is Gathered By Running 50 Games
+
+Base Case
+           |       --> 75
+
 Test Set #1 With 6 Games
 C = 1.0E-6 | M = 2 --> 2
 C = 1.0E-8 | M = 2 --> 4
@@ -13,4 +18,5 @@ C = 1.0E-8 | M = 1 --> 7 (same model)
 
 Test Set #2 With 250k rules
 C = 1.0E-6 | M = 2 = 40
+C = 1.0E-6 | M = 1 = 40
 

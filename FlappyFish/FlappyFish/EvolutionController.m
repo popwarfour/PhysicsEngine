@@ -26,28 +26,60 @@
         
         self.gameVC = gameVC;
         
-        self.currentEnvolution = 0;
-        self.currentEpic = 0;
-        self.parentFitness = 0;
+        self.currentGameCount = 1;
         
         self.evolutionState = EVOLUTION_STATE_MENU;
+        self.gameModeState = GAME_MODE_FREE;
         
         self.currentGapHeight = MAX_GAP_HEIGHT;
         
         self.rules = [[NSMutableArray alloc] init];
         
         self.menuView = [[UIView alloc] initWithFrame:self.view.frame];
-        UIButton *startButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [startButton setFrame:CGRectMake(0, 130, self.view.frame.size.width, 50)];
-        [startButton setTitle:@"Start Gathering Training Data" forState:UIControlStateNormal];
-        [startButton addTarget:self action:@selector(startEvolution) forControlEvents:UIControlEventTouchUpInside];
-        [self.menuView addSubview:startButton];
+        
+        UIButton *hideKeyboard = [[UIButton alloc] initWithFrame:self.view.frame];
+        [hideKeyboard addTarget:self action:@selector(hideKeyboard) forControlEvents:UIControlEventTouchUpInside];
+        [self.menuView addSubview:hideKeyboard];
+        
+        self.startButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [self.startButton setFrame:CGRectMake(0, 90, (self.view.frame.size.width / 3) * 2, 50)];
+        [self.startButton setTitle:@"Start Free Game" forState:UIControlStateNormal];
+        [self.startButton addTarget:self action:@selector(startEvolution) forControlEvents:UIControlEventTouchUpInside];
+        [self.menuView addSubview:self.startButton];
+        
+        UILabel *numGameLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 6) * 3, 90, (self.view.frame.size.width / 6) * 2, 50)];
+        [numGameLabel setText:@"Num Games: "];
+        [numGameLabel setTextAlignment:NSTextAlignmentRight];
+        
+        [self.menuView addSubview:numGameLabel];
+        
+        self.maxGamesTextField = [[UITextField alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 6) * 5 + 5, 90, (self.view.frame.size.width / 6) * 0.9, 50)];
+        [self.maxGamesTextField setKeyboardType:UIKeyboardTypeDecimalPad];
+        [self.maxGamesTextField setText:@"5"];
+        [self.menuView addSubview:self.maxGamesTextField];
+        [self.maxGamesTextField setEnabled:FALSE];
+        [self.maxGamesTextField setTextColor:[UIColor grayColor]];
+        
+        self.gameTypeSegment = [[UISegmentedControl alloc] initWithItems:@[@"Free", @"AI", @"S1 T1", @"S1 T2", @"S1 T3", @"S2 T1", @"S2 T2", @"S2 T3", @"S3 T1"]];
+        [self.gameTypeSegment setSelectedSegmentIndex:0];
+        [self.gameTypeSegment addTarget:self action:@selector(gameTypeSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+        [self.gameTypeSegment setFrame:CGRectMake(2, 130, self.view.frame.size.width, 50)];
+        [self.menuView addSubview:self.gameTypeSegment];
+        
+        self.infoField = [[UILabel alloc] initWithFrame:CGRectMake(50, 185, self.view.frame.size.width - 100, 130)];
+        [self.infoField setTextAlignment:NSTextAlignmentCenter];
+        [self.infoField setNumberOfLines:0];
+        [self.infoField setBackgroundColor:[UIColor lightGrayColor]];
+        [self.infoField setText:@"Free games have no AI or mined rules. It lets you play the game. Simply tap the screen and keep morgan freeman from touching the ceiling, floor or walls and get as far as you can!"];
+        [self.menuView addSubview:self.infoField];
         
         [self.view addSubview:self.menuView];
         
         //Register CallsBacks
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameDidEnd) name:@"gameDidEnd" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkEvolutionWithData:) name:@"checkEvolution" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitGame) name:@"quitGame" object:nil];
     }
     return self;
 }
@@ -66,11 +98,86 @@
 
 #pragma mark - Controller Methods
 
+-(void)hideKeyboard
+{
+    [self.maxGamesTextField resignFirstResponder];
+}
+
+-(void)gameTypeSegmentChanged:(UISegmentedControl *)sender
+{
+    [self.maxGamesTextField resignFirstResponder];
+    
+    self.gameModeState = sender.selectedSegmentIndex;
+    
+    if(sender.selectedSegmentIndex == 0)
+    {
+        [self.startButton setTitle:@"Start Free Game" forState:UIControlStateNormal];
+        
+        [self.infoField setText:@"Free games have no AI or mined rules. It lets you play the game. Simply tap the screen and keep morgan freeman from touching the ceiling, floor or walls and get as far as you can!"];
+        
+        [self.maxGamesTextField setEnabled:FALSE];
+        [self.maxGamesTextField setTextColor:[UIColor grayColor]];
+    }
+    else if(sender.selectedSegmentIndex == 1)
+    {
+        [self.startButton setTitle:@"Start AI Rules Game" forState:UIControlStateNormal];
+        
+        [self.infoField setText:@"The Anders AI is designed to be a great FlappyFreeman player but still make random periodic mistakes"];
+        
+        [self.maxGamesTextField setEnabled:TRUE];
+        [self.maxGamesTextField setTextColor:[UIColor blackColor]];
+    }
+    else
+    {
+        [self.maxGamesTextField setEnabled:TRUE];
+        [self.maxGamesTextField setTextColor:[UIColor blackColor]];
+        
+        [self.startButton setTitle:@"Start Mined Rules Game" forState:UIControlStateNormal];
+        
+        if(sender.selectedSegmentIndex == 2)
+        {
+            [self.infoField setText:@"Set 1 Test 1 contains rules mined from 18500 training instances gathered from 6 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-6 and a min-object of 2. Tree size of 27 with 14 nodes. 96.713% accuracy with three fold test."];
+        }
+        else if(sender.selectedSegmentIndex == 3)
+        {
+            [self.infoField setText:@"Set 1 Test 2 contains rules mined from 18500 training instances gathered from 6 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-8 and a min-object of 2. Tree size of 37 with 19 nodes. 96.653% accuracy with three fold test."];
+        }
+        else if(sender.selectedSegmentIndex == 4)
+        {
+            [self.infoField setText:@"Set 1 Test 3 contains rules mined from 18500 training instances gathered from 6 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-8 and a min-object of 1. Tree size of 39 with 20 nodes. 96.659% accuracy with three fold test."];
+        }
+        else if(sender.selectedSegmentIndex == 5)
+        {
+            [self.infoField setText:@"Set 2 Test 1 contains rules mined from 41500 training instances gathered from 10 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-6 and a min-object of 2. Tree size of 53 with 27 nodes. 97.127% accuracy with three fold test."];
+        }
+        else if(sender.selectedSegmentIndex == 6)
+        {
+            [self.infoField setText:@"Set 2 Test 2 contains rules mined from 41500 training instances gathered from 10 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-8 and a min-object of 2. Tree size of 45 with 23 nodes. 96.723% accuracy with three fold test."];
+        }
+        else if(sender.selectedSegmentIndex == 7)
+        {
+            [self.infoField setText:@"Set 2 Test 3 contains rules mined from 41500 training instances gathered from 10 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-8 and a min-object of 1. Tree size of 45 with 23 nodes. 96.723% accuracy with three fold test."];
+        }
+        else if(sender.selectedSegmentIndex == 8)
+        {
+            [self.infoField setText:@"Set 3 Test 1 contains rules mined from 250000 training instances gathered from over 100 games of AI play. The model is a J48 classifier with a min-conf of 1.0E-6 and a min-object of 2. Tree size of 87 with 44 nodes. 97.973% accuracy with three fold test."];
+        }
+    }
+}
+
+-(void)quitGame
+{
+    [self.gameVC gameOver];
+    [self removeGameView];
+    
+}
 
 -(void)startEvolution
 {
     self.currentGapHeight = MAX_GAP_HEIGHT;
     self.evolutionState = EVOLUTION_STATE_RUNNING;
+    self.currentGameCount = 1;
+    [self.gameVC.gameCountLabel setText:[NSString stringWithFormat:@"%d", self.currentGameCount]];
     [self.menuView removeFromSuperview];
     
     [self.view addSubview:self.gameVC.view];
@@ -79,77 +186,88 @@
 }
 
 #pragma mark - Game CallsBacks
+-(void)removeGameView
+{
+    self.currentGameCount = 1;
+    [self.gameVC.view removeFromSuperview];
+    [self.view addSubview:self.menuView];
+}
+
 -(void)gameDidEnd
 {
-    //Update Fitnes
-    if(self.gameVC.fitness > self.parentFitness)
-        self.parentFitness = self.gameVC.fitness;
-    
-    //Remove last couple rules because they got us killed!
-    for(int i = 0; i < 10; i++)
-        [self.rules removeLastObject];
-    
-    if(self.currentEnvolution < NUM_EVOLUTIONS_PER_EPIC)//self.rules.count < 250000)
+    if(self.gameModeState == GAME_MODE_FREE)
     {
-        self.currentEnvolution++;
-        
-        NSLog(@"CURRENT EVOLUTION: %d | NUMBER OF RULES: %d", self.currentEnvolution, self.rules.count);
-        
-        [self startNewGeneration];
+        [self removeGameView];
     }
     else
     {
-        ArffFormatter *formatter = [[ArffFormatter alloc] init];
-        [formatter convertArrayToArffFormat:self.rules forTraining:FALSE];
+        //Remove last couple rules because they got us killed!
+        for(int i = 0; i < 10; i++)
+            [self.rules removeLastObject];
         
-        [self.gameVC.view removeFromSuperview];
-        [self.view addSubview:self.menuView];
-    }
-    
-    /*
-    //Next Round
-    if(self.currentGapHeight >= MIN_GAP_HEIGHT)
-    {
-        if(self.currentEnvolution < NUM_EVOLUTIONS_PER_EPIC)
+        if(self.currentGameCount < self.maxGamesTextField.text.intValue)
         {
-            self.currentEnvolution++;
+            self.currentGameCount++;
+            
+            [self.gameVC.gameCountLabel setText:[NSString stringWithFormat:@"%d", self.currentGameCount]];
+
+            [self.gameVC startGame];
         }
         else
         {
-            self.currentEnvolution = 0;
-            self.currentEpic++;
+            //ArffFormatter *formatter = [[ArffFormatter alloc] init];
+            //[formatter convertArrayToArffFormat:self.rules forTraining:FALSE];
             
-            NSLog(@"CURRENT EPIC: %d", self.cur);
-            
-            self.currentGapHeight -= DELTA_GAP_HEIGHT;
+            [self removeGameView];
         }
-        
-        [self startNewGeneration];
     }
-    else
-    {
-        ArffFormatter *formatter = [[ArffFormatter alloc] init];
-        [formatter convertArrayToArffFormat:self.rules forTraining:FALSE];
-        
-        [self.gameVC.view removeFromSuperview];
-        [self.view addSubview:self.menuView];
-    }*/
-}
-
--(void)startNewGeneration
-{
-    [self.gameVC setWallGap:self.currentGapHeight];
-    //[self.gameVC setTopScore:s];
-    
-    [self.gameVC startGame];
 }
 
 
 -(void)checkEvolutionWithData:(NSNotification *)notification
 {
-    BOOL training = FALSE;
-    
     NSDictionary *data = [notification object];
+    
+    
+    BOOL pressUp = FALSE;
+    
+    if(self.gameModeState == GAME_MODE_FREE)
+    {
+        //nothing in free mode...
+    }
+    else if(self.gameModeState == GAME_MODE_AI)
+    {
+        pressUp = [self ruleRulesForAI:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_1_TEST_1)
+    {
+        pressUp = [self runRulesFor6GameTest1WithData:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_1_TEST_2)
+    {
+        pressUp = [self runRulesFor6GameTest2WithData:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_1_TEST_3)
+    {
+        pressUp = [self runRulesFor6GameTest3WithData:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_2_TEST_1)
+    {
+        pressUp = [self runRulesFor10GameTest1WithData:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_2_TEST_2)
+    {
+        pressUp = [self runRulesFor10GameTest2WithData:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_2_TEST_3)
+    {
+        pressUp = [self runRulesFor10GameTest3WithData:data];
+    }
+    else if(self.gameModeState == GAME_MODE_MINED_SET_3_TEST_1)
+    {
+        pressUp = [self runRulesForThe250KTestWithData:data];
+    }
+    
     NSNumber *morganY = [data objectForKey:@"morganY"];
     NSNumber *morganX = [data objectForKey:@"morganX"];
     NSNumber *morganHeight = [data objectForKey:@"morganHeight"];
@@ -157,62 +275,7 @@
     NSNumber *wallY = [data objectForKey:@"wallY"];
     NSNumber *wallWidth = [data objectForKey:@"wallWidth"];
     NSNumber *wallHeight = [data objectForKey:@"wallHeight"];
-    
-    
-    BOOL pressUp = FALSE;
-    
-    if(training)
-    {
-        //Training "Known Rules"
-        
-        int morganBottom = (morganY.intValue + morganHeight.intValue);
-        
-        if(morganBottom > 270)
-        {
-            pressUp = TRUE;
-        }
-        
-        
-        int xDistance = (wallX.intValue - morganX.intValue);
-        int temp = (wallY.intValue + wallHeight.intValue + self.currentGapHeight);
-        int yDistance = (morganBottom - temp);
-        float ratio = (float)yDistance / (float)xDistance;
-        
-        if(yDistance < 0)
-            ratio = 0;
-        
-        if(ratio > 0.7 && ratio < 0.8)
-        {
-            pressUp = TRUE;
-        }
-        
-        ;
-        ;
-        if((morganX.intValue > (wallX.intValue - wallWidth.intValue)) && (morganX.intValue < (wallX.intValue + (wallWidth.intValue * 2))))
-        {
-            if(morganBottom + 10 >= wallHeight.intValue + self.currentGapHeight)
-            {
-                pressUp = TRUE;
-            }
-        }
-    }
-    else
-    {
-        //Testing "Mined Rules"
-        //pressUp = [self runRulesFor6GameTest1WithData:data];
-        //pressUp = [self runRulesFor6GameTest2WithData:data];
-        //pressUp = [self runRulesFor6GameTest3WithData:data];
-        
-        //pressUp = [self runRulesFor10GameTest1WithData:data];
-        //pressUp = [self runRulesFor10GameTest2WithData:data];
-        //pressUp = [self runRulesFor10GameTest3WithData:data];
-        
-        pressUp = [self runRulesForThe250KTestWithData:data];
-    }
-    
-    
-    
-    if(pressUp)
+    if(pressUp == TRUE && self.gameModeState != GAME_MODE_FREE)
     {
         NSArray *newKeys = [[NSArray alloc] initWithObjects:@"morganY", @"morganX", @"morganHeight", @"morganWidth", @"wallX", @"wallY", @"wallWidth", @"wallHeight", @"class", nil];
         NSArray *newObjects = [[NSArray alloc] initWithObjects:morganY, morganX, morganHeight, @20, wallX, wallY, wallWidth, wallHeight, @"jump", nil];
@@ -221,7 +284,7 @@
         [self.rules addObject:newData];
         [self.gameVC backgroundButtonPressed:nil];
     }
-    else
+    else if(pressUp == FALSE && self.gameModeState != GAME_MODE_FREE)
     {
         NSArray *newKeys = [[NSArray alloc] initWithObjects:@"morganY", @"morganX", @"morganHeight", @"morganWidth", @"wallX", @"wallY", @"wallWidth", @"wallHeight", @"class", nil];
         NSArray *newObjects = [[NSArray alloc] initWithObjects:morganY, morganX, morganHeight, @20, wallX, wallY, wallWidth, wallHeight, @"noJump", nil];
@@ -229,6 +292,52 @@
         
         [self.rules addObject:newData];
     }
+}
+
+#pragma mark - AI Model
+
+-(BOOL)ruleRulesForAI:(NSDictionary *)data
+{
+    NSNumber *morganY = [data objectForKey:@"morganY"];
+    NSNumber *morganX = [data objectForKey:@"morganX"];
+    NSNumber *morganHeight = [data objectForKey:@"morganHeight"];
+    NSNumber *wallX = [data objectForKey:@"wallX"];
+    NSNumber *wallY = [data objectForKey:@"wallY"];
+    NSNumber *wallWidth = [data objectForKey:@"wallWidth"];
+    NSNumber *wallHeight = [data objectForKey:@"wallHeight"];
+    
+    BOOL pressUp = FALSE;
+    
+    int morganBottom = (morganY.intValue + morganHeight.intValue);
+    
+    if(morganBottom > 270)
+    {
+        pressUp = TRUE;
+    }
+    
+    
+    int xDistance = (wallX.intValue - morganX.intValue);
+    int temp = (wallY.intValue + wallHeight.intValue + self.currentGapHeight);
+    int yDistance = (morganBottom - temp);
+    float ratio = (float)yDistance / (float)xDistance;
+    
+    if(yDistance < 0)
+        ratio = 0;
+    
+    if(ratio > 0.7 && ratio < 0.8)
+    {
+        pressUp = TRUE;
+    }
+    
+    if((morganX.intValue > (wallX.intValue - wallWidth.intValue)) && (morganX.intValue < (wallX.intValue + (wallWidth.intValue * 2))))
+    {
+        if(morganBottom + 10 >= wallHeight.intValue + self.currentGapHeight)
+        {
+            pressUp = TRUE;
+        }
+    }
+    
+    return pressUp;
 }
 
 #pragma mark - Mined Models
@@ -638,8 +747,7 @@
     return pressUp;
 }
 
-#pragma mark - Mined Models
-#pragma mark Testing Set 1 With 18500 Examples
+#pragma mark Testing Set 1 With 45000 Examples
 
 -(BOOL)runRulesFor10GameTest1WithData:(NSDictionary *)data
 {
@@ -1171,8 +1279,7 @@
     return pressUp;
 }
 
-#pragma mark - Mined Models
-#pragma mark Testing Set 1 With 18500 Examples
+#pragma mark Testing Set 1 With 250000 Examples
 -(BOOL)runRulesForThe250KTestWithData:(NSDictionary *)data
 {
     NSNumber *morganY = [data objectForKey:@"morganY"];

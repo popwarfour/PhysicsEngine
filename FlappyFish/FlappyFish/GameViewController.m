@@ -54,15 +54,27 @@
     [self.gameOverLabel  setFont:[self.gameOverLabel.font fontWithSize:40]];
     [self.gameOverLabel  setText:@"Tap To Start"];
     
-    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.frame.size.width / 2, 30)];
+    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, (self.view.frame.size.width / 6), 30)];
     [self.scoreLabel setFont:[self.scoreLabel.font fontWithSize:30]];
     [self.scoreLabel setTextAlignment:NSTextAlignmentCenter];
     [self.scoreLabel setText:@"0"];
     
-    self.topScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2, 25, self.view.frame.size.width / 2, 30)];
+    self.gameCountLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 6) * 2, 25, (self.view.frame.size.width / 6), 30)];
+    [self.gameCountLabel setFont:[self.gameCountLabel.font fontWithSize:30]];
+    [self.gameCountLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.gameCountLabel setText:@"1"];
+    
+    self.topScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 6) * 1, 25, (self.view.frame.size.width / 6), 30)];
     [self.topScoreLabel setFont:[self.topScoreLabel.font fontWithSize:30]];
     [self.topScoreLabel setTextAlignment:NSTextAlignmentCenter];
     [self.topScoreLabel setText:@"0"];
+    
+    self.quitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.quitButton setFrame:CGRectMake(self.view.frame.size.width - (self.view.frame.size.width / 6) - 100, 25, (self.view.frame.size.width / 6), 30)];
+    [self.quitButton setBackgroundColor:[UIColor redColor]];
+    [self.quitButton setTitle:@"Quit" forState:UIControlStateNormal];
+    [self.quitButton addTarget:self action:@selector(quit) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [self.upButton setBackgroundColor:[UIColor clearColor]];
     [self.upButton setBackgroundImage:[UIImage new] forState:UIControlStateHighlighted];
@@ -78,7 +90,9 @@
     [self.gameView setShouldUpdate:FALSE];
     
     [self.view addSubview:self.gameOverLabel];
+    [self.view addSubview:self.quitButton];
     [self.view addSubview:self.scoreLabel];
+    [self.view addSubview:self.gameCountLabel];
     [self.view addSubview:self.topScoreLabel];
 }
 
@@ -372,6 +386,11 @@
     
     [self addNewMovingWalls];
     //self.createNewWallTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addNewMovingWalls) userInfo:nil repeats:TRUE];
+}
+
+-(void)quit
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"quitGame" object:nil];
 }
 
 -(void)gameOver

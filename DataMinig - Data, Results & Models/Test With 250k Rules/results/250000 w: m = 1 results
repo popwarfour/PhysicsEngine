@@ -1,0 +1,140 @@
+=== Run information ===
+
+Scheme:weka.classifiers.trees.J48 -C 8.0E-6 -M 1
+Relation:     handMadeRules
+Instances:    250931
+Attributes:   9
+              morganHeight
+              morganWidth
+              morganX
+              morganY
+              wallHeight
+              wallWidth
+              wallX
+              wallY
+              class
+Test mode:3-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+morganY <= 230
+|   wallX <= 238
+|   |   wallHeight <= 137
+|   |   |   morganY <= 194
+|   |   |   |   wallHeight <= 117
+|   |   |   |   |   morganY <= 105: noJump (32980.0/11.0)
+|   |   |   |   |   morganY > 105
+|   |   |   |   |   |   wallHeight <= 106
+|   |   |   |   |   |   |   morganY <= 164
+|   |   |   |   |   |   |   |   wallHeight <= 97
+|   |   |   |   |   |   |   |   |   morganY <= 133
+|   |   |   |   |   |   |   |   |   |   wallHeight <= 63
+|   |   |   |   |   |   |   |   |   |   |   morganY <= 126
+|   |   |   |   |   |   |   |   |   |   |   |   wallHeight <= 56
+|   |   |   |   |   |   |   |   |   |   |   |   |   morganY <= 114
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight <= 48
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight <= 43: jump (255.0/25.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight > 43
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   morganY <= 109: noJump (129.0/8.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   morganY > 109: jump (154.0/39.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight > 48: noJump (553.0/8.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   morganY > 114
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight <= 51: jump (725.0/4.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight > 51
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   morganY <= 118: noJump (136.0/19.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   morganY > 118: jump (300.0/39.0)
+|   |   |   |   |   |   |   |   |   |   |   |   wallHeight > 56: noJump (991.0/104.0)
+|   |   |   |   |   |   |   |   |   |   |   morganY > 126: jump (624.0/6.0)
+|   |   |   |   |   |   |   |   |   |   wallHeight > 63: noJump (7792.0/67.0)
+|   |   |   |   |   |   |   |   |   morganY > 133
+|   |   |   |   |   |   |   |   |   |   wallHeight <= 70: jump (1337.0/4.0)
+|   |   |   |   |   |   |   |   |   |   wallHeight > 70
+|   |   |   |   |   |   |   |   |   |   |   morganY <= 158
+|   |   |   |   |   |   |   |   |   |   |   |   morganY <= 149
+|   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight <= 81
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   morganY <= 140: noJump (462.0/88.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   morganY > 140: jump (540.0/78.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight > 81: noJump (1494.0/23.0)
+|   |   |   |   |   |   |   |   |   |   |   |   morganY > 149
+|   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight <= 87: jump (600.0/11.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   wallHeight > 87: noJump (412.0/80.0)
+|   |   |   |   |   |   |   |   |   |   |   morganY > 158: jump (556.0/19.0)
+|   |   |   |   |   |   |   |   wallHeight > 97: noJump (5779.0/11.0)
+|   |   |   |   |   |   |   morganY > 164: jump (2270.0/106.0)
+|   |   |   |   |   |   wallHeight > 106
+|   |   |   |   |   |   |   morganY <= 174: noJump (7856.0/21.0)
+|   |   |   |   |   |   |   morganY > 174: jump (872.0/197.0)
+|   |   |   |   wallHeight > 117
+|   |   |   |   |   morganY <= 185: noJump (14276.0/35.0)
+|   |   |   |   |   morganY > 185
+|   |   |   |   |   |   wallHeight <= 126: jump (414.0/107.0)
+|   |   |   |   |   |   wallHeight > 126: noJump (665.0/36.0)
+|   |   |   morganY > 194
+|   |   |   |   wallHeight <= 131: jump (2401.0/6.0)
+|   |   |   |   wallHeight > 131
+|   |   |   |   |   morganY <= 200: noJump (215.0/66.0)
+|   |   |   |   |   morganY > 200: jump (455.0/4.0)
+|   |   wallHeight > 137
+|   |   |   morganY <= 207
+|   |   |   |   morganY <= 203: noJump (19491.0/6.0)
+|   |   |   |   morganY > 203
+|   |   |   |   |   wallHeight <= 141: jump (107.0/13.0)
+|   |   |   |   |   wallHeight > 141: noJump (803.0/4.0)
+|   |   |   morganY > 207
+|   |   |   |   wallHeight <= 150
+|   |   |   |   |   wallHeight <= 145: jump (504.0/15.0)
+|   |   |   |   |   wallHeight > 145
+|   |   |   |   |   |   morganY <= 212: noJump (188.0/20.0)
+|   |   |   |   |   |   morganY > 212: jump (330.0/16.0)
+|   |   |   |   wallHeight > 150
+|   |   |   |   |   morganY <= 218: noJump (1222.0/38.0)
+|   |   |   |   |   morganY > 218
+|   |   |   |   |   |   wallHeight <= 157
+|   |   |   |   |   |   |   morganY <= 221
+|   |   |   |   |   |   |   |   wallHeight <= 154: jump (119.0)
+|   |   |   |   |   |   |   |   wallHeight > 154: noJump (79.0/25.0)
+|   |   |   |   |   |   |   morganY > 221: jump (290.0)
+|   |   |   |   |   |   wallHeight > 157
+|   |   |   |   |   |   |   morganY <= 223: noJump (252.0/13.0)
+|   |   |   |   |   |   |   morganY > 223
+|   |   |   |   |   |   |   |   wallHeight <= 160: jump (109.0/5.0)
+|   |   |   |   |   |   |   |   wallHeight > 160
+|   |   |   |   |   |   |   |   |   morganY <= 227: noJump (117.0/23.0)
+|   |   |   |   |   |   |   |   |   morganY > 227: jump (90.0/8.0)
+|   wallX > 238: noJump (134205.0/3113.0)
+morganY > 230: jump (7782.0)
+
+Number of Leaves  : 	44
+
+Size of the tree : 	87
+
+
+Time taken to build model: 732.3 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances      245801               97.9556 %
+Incorrectly Classified Instances      5130                2.0444 %
+Kappa statistic                          0.8739
+Mean absolute error                      0.0373
+Root mean squared error                  0.1373
+Relative absolute error                 21.625  %
+Root relative squared error             46.7119 %
+Total Number of Instances           250931     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.824     0.004      0.955     0.824     0.885      0.947    jump
+                 0.996     0.176      0.982     0.996     0.989      0.947    noJump
+Weighted Avg.    0.98      0.159      0.979     0.98      0.979      0.947
+
+=== Confusion Matrix ===
+
+      a      b   <-- classified as
+  19745   4206 |      a = jump
+    924 226056 |      b = noJump

@@ -21,8 +21,11 @@
 @property (nonatomic, strong) UILabel *gameOverLabel;
 @property (nonatomic, strong) UILabel *scoreLabel;
 @property (nonatomic, strong) UILabel *topScoreLabel;
+@property (nonatomic, strong) UILabel *gameCountLabel;
 
 @property (nonatomic, strong) NSTimer *createNewWallTimer;
+
+@property (nonatomic, strong) UIButton *quitButton;
 
 @property int gameState;
 
@@ -36,5 +39,6 @@
 -(void)startGame;
 - (IBAction)backgroundButtonPressed:(id)sender;
 -(NSDictionary *)getInformation;
+-(void)gameOver;
 
 @end
